@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhl.card.dao.IUserInfoDao"> 
+	<resultMap id="userInfoMap" type="com.zhl.card.pojo.UserInfo" >
+	    <id column="ID" property="id" jdbcType="VARCHAR" />
+	    <result column="LOG_ID" property="logId" jdbcType="VARCHAR" />
+	    <result column="REAL_NAME" property="realName" jdbcType="VARCHAR" />
+	    <result column="ID_CARD_TYPE" property="idCardType" jdbcType="VARCHAR" />
+	    <result column="ID_CARD_NO" property="idCardNo" jdbcType="VARCHAR" />
+	    <result column="ID_CHECK_STATE" property="idCheckState" jdbcType="VARCHAR" />
+	    <result column="USER_SEX" property="userSex" jdbcType="VARCHAR" />
+	    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
+	    <result column="HEAD_IMG" property="headImg" jdbcType="VARCHAR" />
+	    <result column="USER_MOBILE" property="userMobile" jdbcType="VARCHAR" />
+	    <result column="QQ" property="qq" jdbcType="VARCHAR" />
+	    <result column="WECHAT_NUMBER" property="wechatNumber" jdbcType="VARCHAR" />
+	    <result column="WECHAT_NAME" property="wechatName" jdbcType="VARCHAR" />
+	    <result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
+	    <result column="USER_STATE" property="userState" jdbcType="VARCHAR" />
+	    <result column="USER_LEVEL" property="userLevel" jdbcType="VARCHAR" />
+	    <result column="REV1" property="rev1" jdbcType="VARCHAR" />
+	    <result column="REV2" property="rev2" jdbcType="VARCHAR" />
+	    <result column="REV3" property="rev3" jdbcType="VARCHAR" />
+	    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+	    <result column="ISDEL" property="isDel" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+	    ID, LOG_ID, REAL_NAME, ID_CARD_TYPE, ID_CARD_NO, ID_CHECK_STATE, USER_SEX, NICK_NAME, HEAD_IMG, 
+	    USER_MOBILE, QQ, WECHAT_NUMBER, WECHAT_NAME, USER_TYPE, USER_STATE, USER_LEVEL, REV1, REV2, REV3, 
+	    CREATE_DATE, UPDATE_DATE, UPDATE_USER, ISDEL
+	 </sql>
+	 
+	 <select id="queryUserInfoById" parameterType="java.lang.String" resultMap="userInfoMap">
+       select 
+       <include refid="Base_Column_List" />
+       from USER_INFO 
+       <where>
+            ID = #{id}
+       </where>
+     </select>
+	 
+	 <select id="queryUserInfoCondition2List" parameterType="map" resultMap="userInfoMap">
+	   select 
+	   <include refid="Base_Column_List" />
+	   from USER_INFO 
+	   <where>
+	       <if test="id != null and id != ''"> and ID = #{id} </if>
+	       <if test="logId != null and logId != ''"> and LOG_ID = #{logId} </if>
+	       <if test="realName != null and realName != ''"> and REAL_NAME = #{realName} </if>
+	       <if test="idCardType != null and idCardType != ''"> and ID_CARD_TYPE = #{idCardType} </if>
+	       <if test="idCardNo != null and idCardNo != ''"> and ID_CARD_NO = #{idCardNo} </if>
+	       <if test="idCheckState != null and idCheckState != ''"> and ID_CHECK_STATE = #{idCheckState} </if>
+	       <if test="userSex != null and userSex != ''"> and USER_SEX = #{userSex} </if>
+	       <if test="nickName != null and nickName != ''"> and NICK_NAME = #{nickName} </if>
+	       <if test="headImg != null and headImg != ''"> and HEAD_IMG = #{headImg} </if>
+	       <if test="userMobile != null and userMobile != ''"> and USER_MOBILE = #{userMobile} </if>
+	       <if test="qq != null and qq != ''"> and QQ = #{qq} </if>
+	       <if test="wechatNumber != null and wechatNumber != ''"> and WECHAT_NUMBER = #{wechatNumber} </if>
+	       <if test="wechatName != null and wechatName != ''"> and WECHAT_NAME = #{wechatName} </if>
+	       <if test="userType != null and userType != ''"> and USER_TYPE = #{userType} </if>
+	       <if test="userState != null and userState != ''"> and USER_STATE = #{userState} </if>
+	       <if test="userLevel != null and userLevel != ''"> and USER_LEVEL = #{userLevel} </if>
+	       <if test="rev1 != null and rev1 != ''"> and REV1 = #{rev1} </if>
+	       <if test="rev2 != null and rev2 != ''"> and REV2 = #{rev2} </if>
+	       <if test="rev3 != null and rev3 != ''"> and REV3 = #{rev3} </if>
+	       <if test="createDate != null and createDate != ''"> and CREATE_DATE = #{createDate} </if>
+	       <if test="updateDate != null and updateDate != ''"> and UPDATE_DATE = #{updateDate} </if>
+	       <if test="updateUser != null and updateUser != ''"> and UPDATE_USER = #{updateUser} </if>
+	       <if test="isDel != null and isDel != ''"> and ISDEL = #{isDel} </if>
+	   </where>
+	 </select>
+	 
+    <insert id="insertUserInfo" parameterType="com.zhl.card.pojo.UserInfo" useGeneratedKeys="true" keyProperty="id">
+	    insert into USER_INFO
+        (
+            <include refid="Base_Column_List" />
+        ) 
+        values 
+        ( 
+            #{id}, #{logId}, #{realName}, #{idCardType}, #{idCardNo}, #{idCheckState}, 
+            #{userSex}, #{nickName}, #{headImg}, #{userMobile}, #{qq}, #{wechatNumber}, 
+            #{wechatName}, #{userType}, #{userState}, #{userLevel}, #{rev1}, #{rev2}, #{rev3},
+            #{createDate}, #{updateDate}, #{updateUser}, #{isDel}
+        )
+	</insert>
+	<update id="updateUserInfo" parameterType="com.zhl.card.pojo.UserInfo" >
+	    update USER_INFO
+	    <set>
+	      <if test="realName != null" >
+	        REAL_NAME = #{realName},
+	      </if>
+	      <if test="idCardType != null" >
+	        ID_CARD_TYPE = #{idCardType},
+	      </if>
+	      <if test="idCardNo != null" >
+	        ID_CARD_NO = #{idCardNo},
+	      </if>
+	      <if test="idCheckState != null" >
+	        ID_CHECK_STATE = #{idCheckState},
+	      </if>
+	      <if test="userSex != null" >
+	        USER_SEX = #{userSex},
+	      </if>
+	      <if test="nickName != null" >
+	        NICK_NAME = #{nickName},
+	      </if>
+	      <if test="headImg != null" >
+	        HEAD_IMG = #{headImg},
+	      </if>
+	      <if test="userMobile != null" >
+	        USER_MOBILE = #{userMobile},
+	      </if>
+	      <if test="qq != null" >
+	        QQ = #{qq},
+	      </if>
+	      <if test="wechatNumber != null" >
+	        WECHAT_NUMBER = #{wechatNumber},
+	      </if>
+	      <if test="wechatName != null" >
+	        WECHAT_NAME = #{wechatName},
+	      </if>
+	      <if test="userType != null" >
+	        USER_TYPE = #{userType},
+	      </if>
+	      <if test="userState != null" >
+	        USER_STATE = #{userState},
+	      </if>
+	      <if test="userLevel != null" >
+	        USER_LEVEL = #{userLevel},
+	      </if>
+	      <if test="rev1 != null" >
+	        REV1 = #{rev1},
+	      </if>
+	      <if test="rev2 != null" >
+	        REV2 = #{rev2},
+	      </if>
+	      <if test="rev3 != null" >
+	        REV3 = #{rev3},
+	      </if>
+	      <if test="createDate != null" >
+	        CREATE_DATE = #{createDate},
+	      </if>
+	      <if test="updateDate != null" >
+	        UPDATE_DATE = #{updateDate},
+	      </if>
+	      <if test="updateUser != null" >
+	        UPDATE_USER = #{updateUser},
+	      </if>
+	      <if test="email != null" >
+	        ISDEL = #{email,jdbcType=VARCHAR},
+	      </if>
+	    </set>
+	    where ID = #{id}
+	</update>
+</mapper>

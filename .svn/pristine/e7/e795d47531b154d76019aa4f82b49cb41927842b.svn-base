@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhl.card.dao.ICardInfoDao"> 
+	<resultMap id="cardInfoMap" type="com.zhl.card.pojo.CardInfo" >
+	    <id column="ID" property="id" jdbcType="VARCHAR" />
+	    <result column="LOG_USER_ID" property="logUserId" jdbcType="VARCHAR" />
+	    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+	    <result column="CARD_NO" property="cardNo" jdbcType="VARCHAR" />
+	    <result column="CARD_BIN" property="cardBin" jdbcType="VARCHAR" />
+	    <result column="CARD_TYPE" property="cardType" jdbcType="VARCHAR" />
+	    <result column="CARD_EMAIL" property="cardEmail" jdbcType="VARCHAR" />
+	    <result column="CARD_EMAIL_AUTHIRUZE" property="cardEmailAuthiruze" jdbcType="VARCHAR" />
+	    <result column="STATEMENT_DATE" property="statementDate" jdbcType="TIMESTAMP" />
+	    <result column="REPAYMENT_DATE" property="repaymentDate" jdbcType="TIMESTAMP" />
+	    <result column="CARD_LEVEL" property="cardLevel" jdbcType="VARCHAR" />
+	    <result column="BIND_DATE" property="bindDate" jdbcType="TIMESTAMP" />
+	    <result column="CARD_HOLDER_NAME" property="cardHolderName" jdbcType="VARCHAR" />
+	    <result column="BIND_MOBILE" property="bindMobile" jdbcType="VARCHAR" />
+	    <result column="BIND_IDCARD" property="bindIdcard" jdbcType="VARCHAR" />
+	    <result column="BIND_STATE" property="bindState" jdbcType="VARCHAR" />
+	    <result column="VALIDITY_YEAR" property="validityYear" jdbcType="VARCHAR" />
+	    <result column="VALIDITY_MONTH" property="validityMonth" jdbcType="VARCHAR" />
+	    <result column="CARD_CVV" property="cardCvv" jdbcType="VARCHAR" />
+	    <result column="BANK_LOG" property="bankLog" jdbcType="VARCHAR" />
+	    <result column="HEAD_BANK" property="headBank" jdbcType="VARCHAR" />
+	    <result column="HEAD_BANK_NO" property="headBankNo" jdbcType="VARCHAR" />
+	    <result column="BRANCK" property="branck" jdbcType="VARCHAR" />
+	    <result column="BRANCK_NO" property="branckNo" jdbcType="VARCHAR" />
+	    <result column="VERIFIED" property="verified" jdbcType="VARCHAR" />
+	    <result column="AUTHIRUZE" property="authiruze" jdbcType="VARCHAR" />
+	    <result column="PROVINCE" property="province" jdbcType="VARCHAR" />
+	    <result column="CITY" property="city" jdbcType="VARCHAR" />
+	    <result column="AREA" property="area" jdbcType="VARCHAR" />
+	    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+	    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+	    <result column="STATE" property="state" jdbcType="VARCHAR" />
+	    <result column="ISDEL" property="isDel" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+	    ID, LOG_USER_ID, USER_ID, CARD_NO, CARD_BIN, CARD_TYPE, CARD_EMAIL, CARD_EMAIL_AUTHIRUZE, STATEMENT_DATE, 
+	    REPAYMENT_DATE, CARD_LEVEL, BIND_DATE, CARD_HOLDER_NAME, BIND_MOBILE, BIND_IDCARD, BIND_STATE, VALIDITY_YEAR, VALIDITY_MONTH, 
+	    CARD_CVV, BANK_LOG, HEAD_BANK, HEAD_BANK_NO, BRANCK, BRANCK_NO, VERIFIED, AUTHIRUZE, PROVINCE, CITY, AREA, CREATE_DATE, 
+	    UPDATE_DATE, UPDATE_USER, TYPE, STATE, ISDEL
+	 </sql>
+	 
+	 <select id="queryCardInfoById" parameterType="java.lang.String" resultMap="cardInfoMap">
+       select 
+       <include refid="Base_Column_List" />
+       from CARD_INFO 
+       <where>
+            ID = #{id}
+       </where>
+     </select>
+	 
+	 <select id="queryCardInfoCondition2List" parameterType="map" resultMap="cardInfoMap">
+	   select 
+	   <include refid="Base_Column_List" />
+	   from CARD_INFO 
+	   <where>
+	       <if test="id != null and id != ''"> and ID = #{id} </if>
+	       <if test="logUserId != null and logUserId != ''"> and LOG_USER_ID = #{logUserId} </if>
+	       <if test="userId != null and userId != ''"> and USER_ID = #{userId} </if>
+	       <if test="cardNo != null and cardNo != ''"> and CARD_NO = #{cardNo} </if>
+	       <if test="cardBin != null and cardBin != ''"> and CARD_BIN = #{cardBin} </if>
+	       <if test="cardType != null and cardType != ''"> and CARD_TYPE = #{cardType} </if>
+	       <if test="cardEmail != null and cardEmail != ''"> and CARD_EMAIL = #{cardEmail} </if>
+	       <if test="cardEmailAuthiruze != null and cardEmailAuthiruze != ''"> and CARD_EMAIL_AUTHIRUZE = #{cardEmailAuthiruze} </if>
+	       <if test="statementDate != null and statementDate != ''"> and STATEMENT_DATE = #{statementDate} </if>
+	       <if test="repaymentDate != null and repaymentDate != ''"> and REPAYMENT_DATE = #{repaymentDate} </if>
+	       <if test="cardLevel != null and cardLevel != ''"> and CARD_LEVEL = #{cardLevel} </if>
+	       <if test="bindDate != null and bindDate != ''"> and BIND_DATE = #{bindDate} </if>
+	       <if test="cardHolderName != null and cardHolderName != ''"> and CARD_HOLDER_NAME = #{cardHolderName} </if>
+	       <if test="bindMobile != null and bindMobile != ''"> and BIND_MOBILE = #{bindMobile} </if>
+	       <if test="bindIdcard != null and bindIdcard != ''"> and BIND_IDCARD = #{bindIdcard} </if>
+	       <if test="bindState != null and bindState != ''"> and BIND_STATE = #{bindState} </if>
+	       <if test="validityYear != null and validityYear != ''"> and VALIDITY_YEAR = #{validityYear} </if>
+	       <if test="validityMonth != null and validityMonth != ''"> and VALIDITY_MONTH = #{validityMonth} </if>
+	       <if test="cardCvv != null and cardCvv != ''"> and CARD_CVV = #{cardCvv} </if>
+	       <if test="bankLog != null and bankLog != ''"> and BANK_LOG = #{bankLog} </if>
+	       <if test="headBank != null and headBank != ''"> and HEAD_BANK = #{headBank} </if>
+	       <if test="headBankNo != null and headBankNo != ''"> and HEAD_BANK_NO = #{headBankNo} </if>
+	       <if test="branck != null and branck != ''"> and BRANCK = #{branck} </if>
+	       <if test="branckNo != null and branckNo != ''"> and BRANCK_NO = #{branckNo} </if>
+	       <if test="verified != null and verified != ''"> and VERIFIED = #{verified} </if>
+	       <if test="authiruze != null and authiruze != ''"> and AUTHIRUZE = #{authiruze} </if>
+	       <if test="province != null and province != ''"> and PROVINCE = #{province} </if>
+	       <if test="city != null and city != ''"> and CITY = #{city} </if>
+	       <if test="area != null and area != ''"> and AREA = #{area} </if>
+	       <if test="createDate != null and createDate != ''"> and CREATE_DATE = #{createDate} </if>
+	       <if test="updateDate != null and updateDate != ''"> and UPDATE_DATE = #{updateDate} </if>
+	       <if test="updateUser != null and updateUser != ''"> and UPDATE_USER = #{updateUser} </if>
+	       <if test="type != null and type != ''"> and TYPE = #{type} </if>
+	       <if test="state != null and state != ''"> and STATE = #{state} </if>
+	       <if test="isDel != null and isDel != ''"> and ISDEL = #{isDel} </if>
+	   </where>
+	 </select>
+	 
+    <insert id="insertCardInfo" parameterType="com.zhl.card.pojo.CardInfo" useGeneratedKeys="true" keyProperty="id">
+	    insert into CARD_INFO
+        (
+            <include refid="Base_Column_List" />
+        ) 
+        values 
+        ( 
+            #{id}, #{logUserId}, #{userId}, #{cardNo}, #{cardBin}, #{cardType}, 
+            #{cardEmail}, #{cardEmailAuthiruze}, #{statementDate}, #{repaymentDate}, 
+            #{cardLevel}, #{bindDate}, #{cardHolderName}, #{bindMobile}, #{bindIdcard}, 
+            #{bindState}, #{validityYear}, #{validityMonth}, #{cardCvv}, #{bankLog}, 
+            #{headBank}, #{headBankNo}, #{branck}, #{branckNo}, #{verified}, #{authiruze}, 
+            #{province}, #{city}, #{area}, #{createDate}, #{updateDate}, #{updateUser}, 
+            #{type}, #{state}, #{isDel}
+        )
+	</insert>
+	<update id="updateCardInfo" parameterType="com.zhl.card.pojo.CardInfo" >
+	    update CARD_INFO
+	    <set>
+	      <if test="createDate != null" >
+	        CREATE_DATE = #{createDate},
+	      </if>
+	      <if test="updateDate != null" >
+	        UPDATE_DATE = #{updateDate},
+	      </if>
+	      <if test="updateUser != null" >
+	        UPDATE_USER = #{updateUser},
+	      </if>
+	      <if test="type != null" >
+	        TYPE = #{type},
+	      </if>
+	      <if test="state != null" >
+	        STATE = #{state},
+	      </if>
+	      <if test="isDel != null" >
+	        ISDEL = #{isDel}
+	      </if>
+	    </set>
+	    where ID = #{id}
+	</update>
+</mapper>

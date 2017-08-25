@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhl.card.dao.IBankInfoDao">
+
+	<resultMap id="BankInfoMap" type="com.zhl.card.pojo.BankInfo" >
+		<id column="ID" property="id" jdbcType="TIMESTAMP"/>
+	    <result column="CREATEDDATE" property="createDate" jdbcType="TIMESTAMP"/>
+	    <result column="PID" property="pid" jdbcType="VARCHAR"/>
+	    <result column="BANKCODE" property="bankCode" jdbcType="VARCHAR"/>
+	    <result column="BANKNAME" property="bankName" jdbcType="VARCHAR"/>
+	    <result column="BANKICO" property="bankIco" jdbcType="VARCHAR"/>
+	    <result column="BANKZIPCODE" property="bankZipCode" jdbcType="VARCHAR"/>
+	    <result column="BANKADDR" property="bankAddr" jdbcType="VARCHAR"/>
+	    <result column="BANKLOT" property="bankLot" jdbcType="VARCHAR"/>
+	    <result column="BANKLAT" property="bankLat" jdbcType="VARCHAR"/>
+	    <result column="STATE" property="state" jdbcType="VARCHAR"/>
+	    <result column="CREATENAME" property="createName"/>
+	    <result column="UPDATEDATE" property="updateDate" jdbcType="TIMESTAMP" />
+	    <result column="UPDATENAME" property="updateName" jdbcType="TIMESTAMP" />
+	    <result column="REMARK" property="reMark" jdbcType="VARCHAR"/>
+	    <result column="ISAUDIT" property="isAudit" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="Base_Column_List" >
+	    ID, CREATEDDATE, PID, BANKCODE, BANKNAME, BANKICO, BANKZIPCODE, BANKADDR, BANKLOT, BANKLAT,
+	    STATE, CREATENAME, UPDATEDATE, UPDATENAME, REMARK, ISAUDIT
+	</sql>
+	
+	<select id="queryBankInfoAll" resultMap="BankInfoMap">
+	    select 
+	    <include refid="Base_Column_List" />
+	    from BANKINFO ORDER BY ID
+  	</select>
+</mapper>

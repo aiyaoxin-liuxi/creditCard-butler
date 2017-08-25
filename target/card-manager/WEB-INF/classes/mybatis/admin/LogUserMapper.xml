@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhl.card.dao.ILogUserDao">
+	<resultMap id="LogUser" type="com.zhl.card.pojo.LogUser" >
+	    <id column="ID" property="id" jdbcType="VARCHAR" />
+	    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+	    <result column="LOG_MOBILE" property="logMobile" jdbcType="VARCHAR" />
+	    <result column="LOG_PASSWORD" property="logPassword" jdbcType="VARCHAR" />
+	    <result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
+	    <result column="USER_STATE" property="userState" jdbcType="VARCHAR" />
+	    <result column="REV1" property="rev1" jdbcType="VARCHAR" />
+	    <result column="REV2" property="rev2" jdbcType="VARCHAR" />
+	    <result column="REV3" property="rev3" jdbcType="VARCHAR" />
+	    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+	    <result column="ISDEL" property="isDel" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+	    ID, USER_ID, LOG_MOBILE, LOG_PASSWORD, USER_TYPE, USER_STATE, 
+	    REV1, REV2, REV3, CREATE_DATE, UPDATE_DATE, UPDATE_USER, ISDEL
+	  </sql>
+	
+	<insert id="insertLogUser" parameterType="com.zhl.card.pojo.LogUser" useGeneratedKeys="true" keyProperty="id">
+	    insert into USERLOGINFO
+        (
+            <include refid="Base_Column_List" />
+        ) 
+        values 
+        ( 
+            #{id}, #{userId}, #{logMobile}, #{logPassword}, #{userType}, #{userState}, 
+            #{rev1}, #{rev2}, #{rev3}, #{createDate}, #{updateDate}, #{updateUser}, #{isDel}
+        )
+	  </insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.zhl.card.pojo.LogUser" >
+    	update USERLOGINFO
+	    <set>
+	      <if test="logPassword != null" >
+	        LOG_PASSWORD = #{logPassword},
+	      </if>
+	      <if test="userType != null" >
+	        USER_TYPE = #{userType},
+	      </if>
+	      <if test="userState != null" >
+	        USER_STATE = #{userState},
+	      </if>
+	      <if test="rev1 != null" >
+	        REV1 = #{rev1},
+	      </if>
+	      <if test="rev2 != null" >
+	        REV2 = #{rev2},
+	      </if>
+	      <if test="rev3 != null" >
+	        REV3 = #{rev3},
+	      </if>
+	      <if test="updateDate != null" >
+	        UPDATE_DATE = #{updateDate},
+	      </if>
+	      <if test="updateUser != null" >
+	        UPDATE_USER = #{updateUser},
+	      </if>
+	      <if test="isdel != null" >
+	       ISDEL= #{isDel},
+	      </if>
+	    </set>
+	    where ID = #{id}
+	  </update>
+	  
+	  
+	  
+</mapper>

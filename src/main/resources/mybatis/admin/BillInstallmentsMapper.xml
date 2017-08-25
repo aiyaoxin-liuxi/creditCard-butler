@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhl.card.dao.IBillInstallmentsDao">
+
+	<resultMap id="billInstallmentsMap" type="com.zhl.card.pojo.BillInstallments" >
+		<id column="ID" property="id" jdbcType="VARCHAR"/>
+	    <result column="CARD_BLUE_BILL_ID" property="cardBlueBillId" jdbcType="VARCHAR"/>
+	    <result column="CARD_NO" property="cardNo" jdbcType="VARCHAR"/>
+	    <result column="STATEMENT_MONTH" property="statementMonth" jdbcType="VARCHAR"/>
+	    <result column="CARD_4NO" property="card4No" jdbcType="VARCHAR"/>
+	    <result column="INSTALMENT_TYPE" property="instalmentType" jdbcType="VARCHAR"/>
+	    <result column="INSTALMENT_DATE" property="instalmentDate" jdbcType="VARCHAR"/>
+	    <result column="INSTALMENT_MONEY" property="instalmentMoney" jdbcType="DECIMAL"/>
+	    <result column="INSTALMENT_COUNT" property="instalmentCount" jdbcType="DECIMAL"/>
+	    <result column="RESIDUA_INSTALMENT_COUNT" property="residuaInstalmentCount" jdbcType="DECIMAL"/>
+	    <result column="CRL_INSTALMENT_MONEY" property="crlInstalmentMoney" jdbcType="DECIMAL"/>
+	    <result column="CRL_INSTALMENT_FEE_MONEY" property="crlInstalmentFeeMoney" jdbcType="DECIMAL" />
+	    <result column="CRL_REPAYMENT_MONEY" property="crlRepaymentMoney" jdbcType="DECIMAL" />
+	    <result column="RESIDUAL_PRINCIPAL" property="residualPrincipal" jdbcType="DECIMAL" />
+	    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
+	    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP"/>
+	    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR"/>
+	    <result column="TYPE" property="type" jdbcType="VARCHAR"/>
+	    <result column="STATE" property="state" jdbcType="VARCHAR"/>
+	    <result column="ISDEL" property="isDel" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="Base_Column_List" >
+	    ID, CARD_BLUE_BILL_ID, CARD_NO, STATEMENT_MONTH, CARD_4NO, INSTALMENT_TYPE, INSTALMENT_DATE, INSTALMENT_MONEY, 
+	    INSTALMENT_COUNT, RESIDUA_INSTALMENT_COUNT, CRL_INSTALMENT_MONEY, CRL_INSTALMENT_FEE_MONEY, 
+	    CRL_REPAYMENT_MONEY, RESIDUAL_PRINCIPAL, CREATE_DATE, UPDATE_DATE, UPDATE_USER, TYPE, STATE, ISDEL
+	</sql>
+	
+	<select id="queryBillInstallmentsCondition2List" parameterType="map"  resultMap="billInstallmentsMap">
+	   select 
+	   <include refid="Base_Column_List" />
+	   from BILL_INSTALLMENTS 
+	   <where>
+	       <if test="id != null and id != ''"> and ID = #{id} </if>
+           <if test="cardBlueBillId != null and cardBlueBillId != ''"> and CARD_BLUE_BILL_ID = #{cardBlueBillId} </if>
+           <if test="cardNo != null and cardNo != ''"> and CARD_NO = #{cardNo} </if>
+           <if test="statementMonth != null and statementMonth != ''"> and STATEMENT_MONTH = #{statementMonth} </if>
+           <if test="card4No != null and card4No != ''"> and CARD_4NO = #{card4No} </if>
+           <if test="instalmentType != null and instalmentType != ''"> and INSTALMENT_TYPE = #{instalmentType} </if>
+           <if test="instalmentDate != null and instalmentDate != ''"> and INSTALMENT_DATE = #{instalmentDate} </if>
+           <if test="instalmentMoney != null and instalmentMoney != ''"> and INSTALMENT_MONEY = #{instalmentMoney} </if>
+           <if test="instalmentCount != null and instalmentCount != ''"> and INSTALMENT_COUNT = #{instalmentCount} </if>
+           <if test="residuaInstalmentCount != null and residuaInstalmentCount != ''"> and RESIDUA_INSTALMENT_COUNT = #{residuaInstalmentCount} </if>
+           <if test="crlInstalmentMoney != null and crlInstalmentMoney != ''"> and CRL_INSTALMENT_MONEY = #{crlInstalmentMoney} </if>
+           <if test="crlInstalmentFeeMoney != null and crlInstalmentFeeMoney != ''"> and CRL_INSTALMENT_FEE_MONEY = #{crlInstalmentFeeMoney} </if>
+           <if test="crlRepaymentMoney != null and crlRepaymentMoney != ''"> and CRL_REPAYMENT_MONEY = #{crlRepaymentMoney} </if>
+           <if test="residualPrincipal != null and residualPrincipal != ''"> and RESIDUAL_PRINCIPAL = #{residualPrincipal} </if>
+           <if test="createDate != null and createDate != ''"> and CREATE_DATE = #{createDate} </if>
+           <if test="updateDate != null and updateDate != ''"> and UPDATE_DATE = #{updateDate} </if>
+           <if test="updateUser != null and updateUser != ''"> and UPDATE_USER = #{updateUser} </if>
+           <if test="type != null and type != ''"> and TYPE = #{type} </if>
+           <if test="state != null and state != ''"> and STATE = #{state} </if>
+           <if test="isDel != null and isDel != ''"> and ISDEL = #{isDel} </if>
+	   </where>
+	</select>
+	
+  	<update id="updateBillInstallments" parameterType="map">
+  	     update BILL_INSTALLMENTS
+        <set>
+          <if test="instalmentType != null" >
+            INSTALMENT_TYPE = #{instalmentType},
+          </if>
+          <if test="instalmentDate != null" >
+            INSTALMENT_DATE = #{instalmentDate},
+          </if>
+          <if test="instalmentMoney != null" >
+            INSTALMENT_MONEY = #{instalmentMoney},
+          </if>
+          <if test="instalmentCount != null" >
+            INSTALMENT_COUNT = #{instalmentCount},
+          </if>
+          <if test="residuaInstalmentCount != null" >
+            RESIDUA_INSTALMENT_COUNT = #{residuaInstalmentCount},
+          </if>
+          <if test="crlInstalmentMoney != null" >
+            CRL_INSTALMENT_MONEY = #{crlInstalmentMoney},
+          </if>
+          <if test="crlInstalmentFeeMoney != null" >
+            CRL_INSTALMENT_FEE_MONEY = #{crlInstalmentFeeMoney},
+          </if>
+          <if test="crlRepaymentMoney != null" >
+            CRL_REPAYMENT_MONEY = #{crlRepaymentMoney},
+          </if>
+          <if test="residualPrincipal != null" >
+            RESIDUAL_PRINCIPAL = #{residualPrincipal}
+          </if>
+          <if test="updateDate != null" >
+            UPDATE_DATE = #{updateDate}
+          </if>
+          <if test="updateUser != null" >
+            UPDATE_USER = #{updateUser}
+          </if>
+          <if test="type != null" >
+            TYPE = #{type}
+          </if>
+          <if test="state != null" >
+            STATE = #{state}
+          </if>
+          <if test="isDel != null" >
+            ISDEL = #{isDel}
+          </if>
+        </set>
+        where ID = #{id}
+    </update>
+  	
+  	<insert id="insertBillInstallments" parameterType="com.zhl.card.pojo.BillInstallments" useGeneratedKeys="true" keyProperty="id">
+  	     insert into BILL_INSTALLMENTS
+        (
+            <include refid="Base_Column_List" />
+        ) 
+        values 
+        ( 
+            #{id}, #{cardBlueBillId}, #{cardNo}, #{statementMonth}, #{card4No}, #{instalmentType}, 
+            #{instalmentDate}, #{instalmentMoney}, #{instalmentCount}, 
+            #{residuaInstalmentCount}, #{crlInstalmentMoney}, #{crlInstalmentFeeMoney}, 
+            #{crlRepaymentMoney}, #{createDate}, #{updateDate}, #{updateUser}, 
+            #{type}, #{state}, #{isDel}
+        )
+  	</insert>
+  	
+  	<!-- 批量写入 -->
+    <insert id="insertBillInstallmentsList" parameterType="java.util.List" useGeneratedKeys="false">
+        insert into BILL_INSTALLMENTS (
+        <include refid="Base_Column_List"/>
+        )
+        <foreach collection="list" item="item" index="index" separator="union all">
+            (select 
+            #{item.id}, #{item.cardBlueBillId}, #{item.cardNo}, #{item.statementMonth}, #{item.card4No}, #{item.instalmentType}, 
+            #{item.instalmentDate}, #{item.instalmentMoney}, #{item.instalmentCount}, 
+            #{item.residuaInstalmentCount}, #{item.crlInstalmentMoney}, #{item.crlInstalmentFeeMoney}, 
+            #{item.crlRepaymentMoney}, #{item.createDate}, #{item.updateDate}, #{item.updateUser}, 
+            #{item.type}, #{item.state}, #{item.isDel}
+            from dual)
+        </foreach>
+    </insert>
+</mapper>

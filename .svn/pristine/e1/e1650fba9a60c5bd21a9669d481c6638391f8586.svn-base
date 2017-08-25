@@ -1,0 +1,25 @@
+package com.zhl.card.service;
+
+import com.zhl.card.pojo.LogUser;
+import com.zhl.card.pojo.UserInfo;
+
+
+public interface IUserInfoService {
+    
+    /**
+     * 完善用户信息
+     * @param userInfo
+     * @return
+     */
+    int updateUserInfo(UserInfo userInfo);
+    
+    /**
+     * 根据id查询用户详细信息
+     * @param id
+     * @return
+     */
+    UserInfo queryUserInfoById(String id);
+    
+    
+    
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="creditCard-butler"
+  id="myeclipse.1476430516565"
+  context-root="/creditCard-butler"
+  j2ee-spec="1.7"
+  archive="creditCard-butler.war">
+  <attributes>
+    <attribute name="webrootdir" value="webapp" />
+  </attributes>
+</project-module>
+

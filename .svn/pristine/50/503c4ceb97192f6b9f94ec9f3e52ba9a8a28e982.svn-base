@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhl.card.dao.ISmsInfoDao"> 
+	<resultMap id="smsInfoMap" type="com.zhl.card.pojo.SmsInfo" >
+	    <id column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+	    <result column="SMS_CODE" property="smsCode" jdbcType="VARCHAR" />
+	    <result column="OPERATION" property="operation" jdbcType="VARCHAR" />
+	    <result column="STATE" property="state" jdbcType="VARCHAR" />
+	    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+	    <result column="REV1" property="rev1" jdbcType="VARCHAR" />
+	    <result column="REV2" property="rev2" jdbcType="VARCHAR" />
+	    <result column="REV3" property="rev3" jdbcType="VARCHAR" />
+	    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+	    <result column="ISDEL" property="isDel" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+	    MOBILE, SMS_CODE, OPERATION, STATE, TYPE, REV1, REV2, REV3, 
+	    CREATE_DATE, UPDATE_DATE, UPDATE_USER, ISDEL
+	 </sql>
+	 
+	 <select id="queryUserInfoByMobile" parameterType="java.lang.String" resultMap="smsInfoMap">
+       select 
+       <include refid="Base_Column_List" />
+       from SMS_INFO 
+       <where>
+            MOBILE = #{mobile}
+       </where>
+     </select>
+	 
+	 <select id="querySmsInfoCondition2List" parameterType="map" resultMap="smsInfoMap">
+	   select 
+	   <include refid="Base_Column_List" />
+	   from SMS_INFO 
+	   <where>
+	       <if test="mobile != null and mobile != ''"> and MOBILE = #{mobile} </if>
+	       <if test="smsCode != null and smsCode != ''"> and SMS_CODE = #{smsCode} </if>
+	       <if test="operation != null and operation != ''"> and OPERATION = #{operation} </if>
+	       <if test="state != null and state != ''"> and STATE = #{state} </if>
+	       <if test="type != null and type != ''"> and TYPE = #{type} </if>
+	       <if test="rev1 != null and rev1 != ''"> and REV1 = #{rev1} </if>
+	       <if test="rev2 != null and rev2 != ''"> and REV2 = #{rev2} </if>
+	       <if test="rev3 != null and rev3 != ''"> and REV3 = #{rev3} </if>
+	       <if test="createDate != null and createDate != ''"> and CREATE_DATE = #{createDate} </if>
+	       <if test="updateDate != null and updateDate != ''"> and UPDATE_DATE = #{updateDate} </if>
+	       <if test="updateUser != null and updateUser != ''"> and UPDATE_USER = #{updateUser} </if>
+	       <if test="isDel != null and isDel != ''"> and ISDEL = #{isDel} </if>
+	   </where>
+	 </select>
+	 
+    <insert id="insertSmsInfo" parameterType="com.zhl.card.pojo.SmsInfo" useGeneratedKeys="true" keyProperty="mobile">
+	    insert into SMS_INFO
+        (
+            <include refid="Base_Column_List" />
+        ) 
+        values 
+        ( 
+            #{mobile}, #{smsCode}, #{operation}, #{state}, #{type}, #{rev1}, #{rev2}, #{rev3},
+            #{createDate}, #{updateDate}, #{updateUser}, #{isDel}
+        )
+	</insert>
+	<update id="updateSmsInfo" parameterType="com.zhl.card.pojo.SmsInfo" >
+	    update SMS_INFO
+	    <set>
+	      <if test="smsCode != null" >
+	        SMS_CODE = #{smsCode},
+	      </if>
+	      <if test="operation != null" >
+	        OPERATION = #{operation},
+	      </if>
+	      <if test="state != null" >
+	        STATE = #{state},
+	      </if>
+	      <if test="type != null" >
+	        TYPE = #{type},
+	      </if>
+	      <if test="rev1 != null" >
+	        REV1 = #{rev1},
+	      </if>
+	      <if test="rev2 != null" >
+	        REV2 = #{rev2},
+	      </if>
+	      <if test="rev3 != null" >
+	        REV3 = #{rev3},
+	      </if>
+	      <if test="createDate != null" >
+	        CREATE_DATE = #{createDate},
+	      </if>
+	      <if test="updateDate != null" >
+	        UPDATE_DATE = #{updateDate},
+	      </if>
+	      <if test="updateUser != null" >
+	        UPDATE_USER = #{updateUser},
+	      </if>
+	      <if test="email != null" >
+	        ISDEL = #{email,jdbcType=VARCHAR},
+	      </if>
+	    </set>
+	    where MOBILE = #{mobile}
+	</update>
+</mapper>

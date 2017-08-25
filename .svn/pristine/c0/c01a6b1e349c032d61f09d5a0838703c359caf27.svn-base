@@ -1,0 +1,125 @@
+package com.zhl.card.pay.impl;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.codehaus.jackson.JsonNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.zhl.card.pay.common.BasePay;
+import com.zhl.card.pojo.CardInfo;
+import com.zhl.card.pojo.common.ResponseEntity;
+import com.zhl.card.pojo.enums.CardType;
+import com.zhl.card.pojo.enums.common.ReturnCode;
+import com.zhl.card.pojo.enums.trans.State;
+import com.zhl.card.util.JsonUtil;
+import com.zhl.card.util.MD5;
+import com.zhl.card.util.PropsHandler;
+import com.zhl.card.util.RandomGenerator;
+import com.zhl.card.util.Stringer;
+import com.zhl.card.util.http.HttpClientHelper;
+/**
+ * 	考拉的卡的有效性验证
+  * @ClassName: CardValid4Pay
+  * @author zhaotisheng	
+  * @date 2017年4月1日 上午9:17:15
+  * Copyright (c) 2016, zhaotisheng@qq.com All Rights Reserved.
+ */
+public class CardValidOfKaoLa extends BasePay {
+	private Logger logs = LoggerFactory.getLogger(CardValidOfKaoLa.class);
+
+	//卡的有效性验证
+	// 4要素验证
+	public static final String VALID_CARD_KAOLA_FOUR_URL=Stringer.nullToEmpty(PropsHandler.getProperty("valid.card.kaola.four.url"));
+	// 6要素验证
+	public static final String VALID_CARD_KAOLA_SIX_URL=Stringer.nullToEmpty(PropsHandler.getProperty("valid.card.kaola.six.url"));
+	//valid.card.merchId
+	public static final String VALID_CARD_MERCHID=Stringer.nullToEmpty(PropsHandler.getProperty("valid.card.kaola.merchId"));
+	//valid.card.key
+	public static final String VALID_CARD_KEY=Stringer.nullToEmpty(PropsHandler.getProperty("valid.card.kaola.key"));
+		
+	public static final String uploadStr="uploadStr";
+	public static final String returnStr="returnStr";
+	
+	
+	//卡的有效性验证 (四要素)
+	public Map<String, Object> validCard(CardInfo cardInfo) {
+	    logs.info("考拉的卡的有效性验证...开始--->参数：cardInfo = " + JsonUtil.toJson(cardInfo));
+		Map<String, Object> returnMap=new HashMap<String, Object>();
+		String url = "";
+		if(CardType.CODE01.getCode().equals(cardInfo.getCardType())){
+		    url = VALID_CARD_KAOLA_FOUR_URL;
+		} else {
+		    url = VALID_CARD_KAOLA_SIX_URL;
+		}
+		
+		String merchId = VALID_CARD_MERCHID;
+		String key = VALID_CARD_KEY;
+		
+		Map<String, Object> paramMap=new HashMap<String, Object>();
+		String tranNo = RandomGenerator.randomTimeMillis(18);
+		paramMap.put("tranNo", tranNo);
+		paramMap.put("merchId", merchId);
+		paramMap.put("accNo", cardInfo.getCardNo());
+		//accName
+		paramMap.put("accName", cardInfo.getCardHolderName());
+		//certNo
+		paramMap.put("certNo", cardInfo.getBindIdcard());
+		//tel
+		paramMap.put("tel", cardInfo.getBindMobile());
+		// 性用卡所需参数
+		if(CardType.CODE02.getCode().equals(cardInfo.getCardType())){
+		    // cvv
+            paramMap.put("cvn2", cardInfo.getCardCvv());
+            // 有效期
+            paramMap.put("validityTerm", cardInfo.getValidityYear() + cardInfo.getValidityMonth());
+		}
+		//channelId
+		paramMap.put("channelId", "2");
+		//sign
+		String sign =MD5.encrypt(merchId+tranNo,key);
+		paramMap.put("sign", sign);
+		StringBuilder json = JsonUtil.toJson(paramMap);
+		logs.info(url+" <--上送的url，【卡的有效性验证】上送的param："+json.toString());
+		returnMap.put("uploadStr", url+"##" + json.toString());
+//			String o = HttpClientHelper.doHttpClient(url, "POST", "utf-8", json.toString(), "60000","application/json","");
+		//simulation
+		String o="{\"tranNo\":\"1490954247712193783854099210470\",\"code\":\"1\",\"message\":\"信息认证未通过(身份证号不正确)\"}";
+		if(Stringer.isNullOrEmpty(o)){
+		    returnMap.put("returnCode", State.ERROR_INTERFACE_NODATA_08.getCode());
+		    returnMap.put("returnStr", State.ERROR_INTERFACE_NODATA_08.getName());
+			logs.info(" 【卡的有效性验证】返回的结果：\r\n\t"+State.ERROR_INTERFACE_NODATA_08.getName());
+			return returnMap;
+		}
+		logs.info("【卡的有效性验证】返回的结果" + o);
+		returnMap.put("returnStr", o);
+		try {
+			JsonNode rootNode = JsonUtil.toJsonNode(o);
+			JsonNode codeNode = rootNode.path("code");
+			if(Stringer.isNullOrEmpty(codeNode)){
+			    returnMap.put("returnCode", State.ERROR_INTERFACE_05.getCode());
+			    returnMap.put("returnStr", "接口返回无code");
+			}
+			if(codeNode.getTextValue().equals("2")){
+			    returnMap.put("returnCode", State.ERROR_INTERFACE_05.getCode());
+			    returnMap.put("returnStr", "message"+rootNode.path("message").getTextValue());
+			}else if(codeNode.getTextValue().equals("1")){
+			    returnMap.put("returnCode", ReturnCode.SUCCESS_000000.getCode());
+			    returnMap.put("returnStr", "认证成功");
+			}else{
+			    returnMap.put("returnCode", ""+ State.ERROR_INTERFACE_05.getCode());
+			    returnMap.put("returnStr", "未知的返回参数");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			returnMap.put("returnCode", State.ERROR_PROGRAM_06.getCode());
+			returnMap.put("returnStr", "解析错误");
+			return returnMap;
+		}
+		logs.info("考拉的卡的有效性验证...结束--->返回参数：returnMap = " + JsonUtil.toJson(returnMap));
+		return returnMap;
+	}
+		
+}

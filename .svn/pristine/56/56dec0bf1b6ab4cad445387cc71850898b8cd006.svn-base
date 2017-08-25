@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhl.card.dao.ICardBinDao">
+
+	<resultMap id="CardBinMap" type="com.zhl.card.pojo.CardBin" >
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+	    <result column="CREATEDDATE" property="createdDate" jdbcType="TIMESTAMP" />
+	    <result column="BANKINFO_ID" property="bankinfoId" jdbcType="VARCHAR" />
+	    <result column="CARDBIN" property="cardBin" jdbcType="VARCHAR" />
+	    <result column="CARDBINLEN" property="cardBinLen" jdbcType="VARCHAR" />
+	    <result column="CARDLEN" property="cardLen" jdbcType="VARCHAR" />
+	    <result column="CARDBINTYPE" property="cardBinType" jdbcType="VARCHAR" />
+	    <result column="ISSINCCODE" property="issincCode" jdbcType="VARCHAR" />
+	    <result column="ISSINCNAME" property="issincName" jdbcType="VARCHAR" />
+	    <result column="CARDNAME" property="cardName" jdbcType="VARCHAR" />
+	    <result column="STATE" property="state" jdbcType="VARCHAR" />
+	    <result column="CREATENAME" property="createName" jdbcType="VARCHAR" />
+	    <result column="UPDATEDATE" property="updateDate" jdbcType="TIMESTAMP" />
+	    <result column="UPDATENAME" property="updateName" jdbcType="TIMESTAMP" />
+	    <result column="REMARK" property="reMark" jdbcType="VARCHAR" />
+	    <result column="ISAUDIT" property="isAudit" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List" >
+	    ID, CREATEDDATE, BANKINFO_ID, CARDBIN, CARDBINLEN, CARDLEN, CARDBINTYPE, ISSINCCODE, ISSINCNAME, 
+	    CARDNAME, STATE, CREATENAME, UPDATEDATE, UPDATENAME, REMARK, ISAUDIT
+	</sql>
+	
+	<select id="queryCardBinAll" resultMap="CardBinMap">
+	    select 
+	    <include refid="Base_Column_List" />
+	    from CARDBIN
+  	</select>
+</mapper>

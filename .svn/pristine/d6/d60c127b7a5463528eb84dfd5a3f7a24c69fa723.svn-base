@@ -1,0 +1,139 @@
+package com.zhl.card.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.lang.StringUtils;
+import org.pub.util.uuid.KeySn;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.zhl.card.controller.common.BaseController;
+import com.zhl.card.pojo.UserInfo;
+import com.zhl.card.pojo.common.ResponseEntity;
+import com.zhl.card.pojo.enums.common.ReturnCode;
+import com.zhl.card.service.IUserInfoService;
+
+@Controller
+@RequestMapping(value = "/userInfo")
+public class UserInfoController extends BaseController{
+
+	private Logger logs = LoggerFactory.getLogger(UserInfoController.class);
+	
+	@Resource
+	private IUserInfoService userInfoService;
+	
+	/**
+     * 用户信息修改
+     * @param model
+     * @param request
+     * @param mobile
+     * @return
+     */
+    @RequestMapping(value = "/updateUserInfo")
+    @ResponseBody
+    public Object updateUserInfo(UserInfo userInfo){
+        
+        ResponseEntity resEntity = new ResponseEntity();
+        String keySn = KeySn.getKey();
+        logs.info("修改用户信息---->开始...");
+        logs.info("修改用户信息---->请求参数：keySn:" + keySn + ",userInfo=" + userInfo);
+        String check = checkUpdateUserInfo(userInfo);
+        if(null != check){
+            resEntity.setResponseEntity(keySn, ReturnCode.DATA_VALID_FAIL_200000.getCode(), check);
+            logs.info("修改用户信息---->返回参数：" + resEntity.toString());
+            return resEntity;
+        }
+        
+        int reInt = userInfoService.updateUserInfo(userInfo);
+        if(reInt == 1){
+            resEntity.setResponseEntity(keySn, ReturnCode.SUCCESS_000000.getCode(), ReturnCode.SUCCESS_000000.getName());
+        } else {
+            resEntity.setResponseEntity(keySn, ReturnCode.FAIL_110110.getCode(), ReturnCode.FAIL_110110.getName());
+        }
+        logs.info("修改用户信息---->完成..." + resEntity.toString());
+        return resEntity;
+    }
+    
+    @RequestMapping(value = "/getUserInfoDetailed")
+    @ResponseBody
+    public Object getUserInfoDetailed(String id){
+        
+        String keySn = KeySn.getKey();
+        logs.info("查新用户详细信息---->开始...");
+        logs.info("查新用户详细信息---->请求参数：keySn:" + keySn + ",id=:" + id);
+        ResponseEntity resEntity = new ResponseEntity();
+        
+        String check = checkGetUserInfoDetailed(id);
+        if(null != check){
+            resEntity.setResponseEntity(keySn, ReturnCode.DATA_VALID_FAIL_200000.getName(), ReturnCode.DATA_VALID_FAIL_200000.getName() + check);
+            logs.info("查新用户详细信息---->返回参数：" + resEntity.toString());
+            return resEntity;
+        }
+        
+        UserInfo userInfo = userInfoService.queryUserInfoById(id);
+        if(null != userInfo){
+            Map<String, Object> returnMap = new HashMap<String, Object>();
+            returnMap.put("userInfo", userInfo);
+            resEntity.setResponseEntity(keySn, ReturnCode.SUCCESS_000000.getCode(), ReturnCode.SUCCESS_000000.getName(), returnMap);
+        } else {
+            resEntity.setResponseEntity(keySn, ReturnCode.OBJECT_NOT_FIND_111111.getCode(), ReturnCode.OBJECT_NOT_FIND_111111.getName());
+        }
+        logs.info("查新用户详细信息---->返回参数：" + resEntity.toString());
+        return resEntity;
+    }
+	
+	/*
+	 * ==============================check==============================
+	 */
+	
+	/**
+	 * 检查修改用户信息入参数
+	 * @return
+	 */
+	private String checkUpdateUserInfo(UserInfo userInfo){
+	    
+	    if(null != userInfo){
+	        if(null == userInfo.getId() || "".equals(userInfo.getId().trim())){
+	            return "id不能为空";
+	        }
+	        if(null == userInfo.getRealName() || "".equals(userInfo.getRealName().trim())){
+	            return "真实姓名不能为空";
+	        }
+	        if(null == userInfo.getIdCardType() || "".equals(userInfo.getIdCardType().trim())){
+                return "证件类型不能为空";
+            }
+	        if(null == userInfo.getIdCardNo() || "".equals(userInfo.getIdCardNo().trim())){
+	            return "证件编号不能为空";
+	        }
+	        if(null == userInfo.getUserSex() || "".equals(userInfo.getUserSex().trim())){
+	            return "性别不能为空";
+	        }
+	        if(null == userInfo.getNickName() || "".equals(userInfo.getNickName().trim())){
+	            return "昵称不能为空";
+	        }
+	        if(null == userInfo.getUserMobile() || "".equals(userInfo.getUserMobile().trim())){
+	            return "联系手机号不能为空";
+	        }
+	    }
+	    return null;
+	}
+	
+	/**
+	 * 检查获取详细信息参数
+	 * @param id
+	 * @return
+	 */
+	private String checkGetUserInfoDetailed(String id){
+	    if(StringUtils.isBlank(id)){
+            return "id不能为空";
+        }
+	    return null;
+	}
+	
+}

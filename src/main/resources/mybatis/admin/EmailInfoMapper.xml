@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhl.card.dao.IEmailInfoDao"> 
+	<resultMap id="emailInfoMap" type="com.zhl.card.pojo.EmailInfo" >
+	    <id column="ID" property="id" jdbcType="VARCHAR" />
+	    <result column="LOG_ID" property="logId" jdbcType="VARCHAR" />
+	    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+	    <result column="CARD_ID" property="cardId" jdbcType="VARCHAR" />
+	    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+	    <result column="EMAIL_PASSWORD" property="emailPassword" jdbcType="VARCHAR" />
+	    <result column="TOKEN" property="token" jdbcType="VARCHAR" />
+	    <result column="YB_ID" property="ybId" jdbcType="VARCHAR" />
+	    <result column="ACCEPT_STATE" property="acceptState" jdbcType="VARCHAR" />
+	    <result column="STATE" property="state" jdbcType="VARCHAR" />
+	    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+	    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+	    <result column="ISDEL" property="isDel" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+	   ID, LOG_ID, USER_ID, CARD_ID, EMAIL, EMAIL_PASSWORD, TOKEN, YB_ID, 
+	   ACCEPT_STATE, STATE, TYPE, CREATE_DATE, UPDATE_DATE, UPDATE_USER, ISDEL
+    </sql>
+	<sql id="Base_Column_List_NoPassword" >
+	   ID, LOG_ID, USER_ID, CARD_ID, EMAIL, TOKEN, YB_ID, 
+	   ACCEPT_STATE, STATE, TYPE, CREATE_DATE, UPDATE_DATE, UPDATE_USER, ISDEL
+    </sql>
+    
+    <select id="queryEmailCondition2List" parameterType="map" resultMap="emailInfoMap">
+        select 
+        <include refid="Base_Column_List" /> 
+        from EMAIL_INFO 
+        <where>
+            <if test="id != null and id != ''"> and ID = #{id} </if>
+            <if test="logId != null and logId != ''"> and LOG_ID = #{logId} </if>
+            <if test="userId != null and userId != ''"> and USER_ID = #{userId} </if>
+            <if test="cardId != null and cardId != ''"> and CARD_ID = #{cardId} </if>
+            <if test="email != null and email != ''"> and EMAIL = #{email} </if>
+            <if test="emailPassword != null and emailPassword != ''"> and EMAIL_PASSWORD = #{emailPassword} </if>
+            <if test="token != null and token != ''"> and TOKEN = #{token} </if>
+            <if test="ybId != null and ybId != ''"> and YB_ID = #{ybId} </if>
+            <if test="acceptState != null and acceptState != ''"> and ACCEPT_STATE = #{acceptState} </if>
+            <if test="state != null and state != ''"> and STATE = #{state} </if>
+            <if test="type != null and type != ''"> and TYPE = #{type} </if>
+            <if test="createDate != null and createDate != ''"> and CREATE_DATE = #{createDate} </if>
+            <if test="updateDate != null and updateDate != ''"> and UPDATE_DATE = #{updateDate} </if>
+            <if test="updateUser != null and updateUser != ''"> and UPDATE_USER = #{updateUser} </if>
+            <if test="isDel != null and isDel != ''"> and ISDEL = #{isDel} </if>
+        </where>
+    </select>
+    
+    <select id="queryEmailCondition2ListNoPassword" parameterType="map" resultMap="emailInfoMap">
+        select 
+        <include refid="Base_Column_List_NoPassword" /> 
+        from EMAIL_INFO 
+        <where>
+            <if test="id != null and id != ''"> and ID = #{id} </if>
+            <if test="logId != null and logId != ''"> and LOG_ID = #{logId} </if>
+            <if test="userId != null and userId != ''"> and USER_ID = #{userId} </if>
+            <if test="cardId != null and cardId != ''"> and CARD_ID = #{cardId} </if>
+            <if test="email != null and email != ''"> and EMAIL = #{email} </if>
+            <if test="emailPassword != null and emailPassword != ''"> and EMAIL_PASSWORD = #{emailPassword} </if>
+            <if test="token != null and token != ''"> and TOKEN = #{token} </if>
+            <if test="ybId != null and ybId != ''"> and YB_ID = #{ybId} </if>
+            <if test="acceptState != null and acceptState != ''"> and ACCEPT_STATE = #{acceptState} </if>
+            <if test="state != null and state != ''"> and STATE = #{state} </if>
+            <if test="type != null and type != ''"> and TYPE = #{type} </if>
+            <if test="createDate != null and createDate != ''"> and CREATE_DATE = #{createDate} </if>
+            <if test="updateDate != null and updateDate != ''"> and UPDATE_DATE = #{updateDate} </if>
+            <if test="updateUser != null and updateUser != ''"> and UPDATE_USER = #{updateUser} </if>
+            <if test="isDel != null and isDel != ''"> and ISDEL = #{isDel} </if>
+        </where>
+    </select>
+    
+    <update id="updateEmailInfo" parameterType="com.zhl.card.pojo.EmailInfo" >
+        update EMAIL_INFO
+        <set>
+          <if test="email != null" >
+            EMAIL = #{email},
+          </if>
+          <if test="emailPassword != null" >
+            EMAIL_PASSWORD = #{emailPassword},
+          </if>
+          <if test="token != null" >
+            TOKEN = #{token},
+          </if>
+          <if test="ybId != null" >
+            YB_ID = #{ybId},
+          </if>
+          <if test="acceptState != null" >
+            ACCEPT_STATE = #{acceptState},
+          </if>
+          <if test="state != null" >
+            STATE = #{state},
+          </if>
+          <if test="type != null" >
+            TYPE = #{type},
+          </if>
+          <if test="createDate != null" >
+            CREATE_DATE = #{createDate},
+          </if>
+          <if test="updateDate != null" >
+            UPDATE_DATE = #{updateDate},
+          </if>
+          <if test="updateUser != null" >
+            UPDATE_USER = #{updateUser},
+          </if>
+          <if test="isDel != null" >
+            ISDEL = #{isDel}
+          </if>
+        </set>
+        where ID = #{id}
+    </update>
+    
+    <!-- 写入 -->
+    <insert id="insertEmailInfo" parameterType="com.zhl.card.pojo.EmailInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into EMAIL_INFO 
+        (
+        <include refid="Base_Column_List" />
+        ) 
+        values 
+        (
+            #{id}, #{logId}, #{userId}, #{cardId}, #{email}, #{emailPassword},  #{token},  
+            #{ybId}, #{acceptState}, #{state}, #{type}, #{createDate}, #{updateDate}, #{updateUser}, #{isDel}
+        )
+    </insert>
+</mapper>

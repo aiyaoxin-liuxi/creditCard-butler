@@ -1,0 +1,340 @@
+package com.zhl.card.pojo;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+
+/**
+ * 账单分期表
+ * @author 刘熙
+ */
+public class BillInstallments implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * id
+	 */
+    private String id;
+    /**
+     * 信用卡账单表id
+     */
+    private String cardBlueBillId;
+    /**
+     * 银行卡号
+     */
+    private String cardNo;
+    /**
+     * 账单月份
+     */
+    private String statementMonth;
+    /**
+     * 卡号
+     */
+    private String card4No;
+    /**
+     * 分期类型
+     */
+    private String instalmentType;
+    /**
+     * 分期时间
+     */
+    private String instalmentDate;
+    /**
+     * 分期总额
+     */
+    private BigDecimal instalmentMoney;
+    /**
+     * 分期期数
+     */
+    private int instalmentCount;
+    /**
+     * 剩余期数
+     */
+    private int residuaInstalmentCount;
+    /**
+     * 本期分期金额
+     */
+    private BigDecimal crlInstalmentMoney;
+    /**
+     * 本期分期手续费
+     */
+    private BigDecimal crlInstalmentFeeMoney;
+    /**
+     * 本期偿还额
+     */
+    private BigDecimal crlRepaymentMoney;
+    /**
+     * 剩余本金
+     */
+    private BigDecimal residualPrincipal;
+    /**
+     * 创建时间
+     */
+    private Date createDate;
+    /**
+     * 修改时间
+     */
+    private Date updateDate;
+    /**
+     * 修改人
+     */
+    private String updateUser;
+    /**
+     * 类型
+     */
+    private String type;
+    /**
+     * 状态
+     */
+    private String state;
+    /**
+     * 逻辑删除标识
+     */
+    private String isDel;
+    
+    
+    // get and set
+    
+    /**
+     * 获取id id
+     */
+    public String getId() {
+        return id;
+    }
+    /**
+     * 设置id id
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+    /**
+     * 获取信用卡账单表id cardBlueBillId
+     */
+    public String getCardBlueBillId() {
+        return cardBlueBillId;
+    }
+    /**
+     * 设置信用卡账单表id cardBlueBillId
+     */
+    public void setCardBlueBillId(String cardBlueBillId) {
+        this.cardBlueBillId = cardBlueBillId;
+    }
+    /**
+     * 获取银行卡号 cardNo
+     */
+    public String getCardNo() {
+        return cardNo;
+    }
+    /**
+     * 设置银行卡号 cardNo
+     */
+    public void setCardNo(String cardNo) {
+        this.cardNo = cardNo;
+    }
+    /**
+     * 获取卡号 card4No
+     */
+    public String getCard4No() {
+        return card4No;
+    }
+    /**
+     * 设置卡号 card4No
+     */
+    public void setCard4No(String card4No) {
+        this.card4No = card4No;
+    }
+    /**
+     * 获取分期类型 instalmentType
+     */
+    public String getInstalmentType() {
+        return instalmentType;
+    }
+    /**
+     * 设置分期类型 instalmentType
+     */
+    public void setInstalmentType(String instalmentType) {
+        this.instalmentType = instalmentType;
+    }
+    /**
+     * 获取分期时间 instalmentDate
+     */
+    public String getInstalmentDate() {
+        return instalmentDate;
+    }
+    /**
+     * 设置分期时间 instalmentDate
+     */
+    public void setInstalmentDate(String instalmentDate) {
+        this.instalmentDate = instalmentDate;
+    }
+    /**
+     * 获取分期总额 instalmentMoney
+     */
+    public BigDecimal getInstalmentMoney() {
+        return instalmentMoney;
+    }
+    /**
+     * 设置分期总额 instalmentMoney
+     */
+    public void setInstalmentMoney(BigDecimal instalmentMoney) {
+        this.instalmentMoney = instalmentMoney;
+    }
+    /**
+     * 获取分期期数 instalmentCount
+     */
+    public int getInstalmentCount() {
+        return instalmentCount;
+    }
+    /**
+     * 设置分期期数 instalmentCount
+     */
+    public void setInstalmentCount(int instalmentCount) {
+        this.instalmentCount = instalmentCount;
+    }
+    /**
+     * 获取剩余期数 residuaInstalmentCount
+     */
+    public int getResiduaInstalmentCount() {
+        return residuaInstalmentCount;
+    }
+    /**
+     * 设置剩余期数 residuaInstalmentCount
+     */
+    public void setResiduaInstalmentCount(int residuaInstalmentCount) {
+        this.residuaInstalmentCount = residuaInstalmentCount;
+    }
+    /**
+     * 获取本期分期金额 crlInstalmentMoney
+     */
+    public BigDecimal getCrlInstalmentMoney() {
+        return crlInstalmentMoney;
+    }
+    /**
+     * 设置本期分期金额 crlInstalmentMoney
+     */
+    public void setCrlInstalmentMoney(BigDecimal crlInstalmentMoney) {
+        this.crlInstalmentMoney = crlInstalmentMoney;
+    }
+    /**
+     * 获取本期分期手续费 crlInstalmentFeeMoney
+     */
+    public BigDecimal getCrlInstalmentFeeMoney() {
+        return crlInstalmentFeeMoney;
+    }
+    /**
+     * 设置本期分期手续费 crlInstalmentFeeMoney
+     */
+    public void setCrlInstalmentFeeMoney(BigDecimal crlInstalmentFeeMoney) {
+        this.crlInstalmentFeeMoney = crlInstalmentFeeMoney;
+    }
+    /**
+     * 获取本期偿还额 crlRepaymentMoney
+     */
+    public BigDecimal getCrlRepaymentMoney() {
+        return crlRepaymentMoney;
+    }
+    /**
+     * 设置本期偿还额 crlRepaymentMoney
+     */
+    public void setCrlRepaymentMoney(BigDecimal crlRepaymentMoney) {
+        this.crlRepaymentMoney = crlRepaymentMoney;
+    }
+    /**
+     * 获取剩余本金 residualPrincipal
+     */
+    public BigDecimal getResidualPrincipal() {
+        return residualPrincipal;
+    }
+    /**
+     * 设置剩余本金 residualPrincipal
+     */
+    public void setResidualPrincipal(BigDecimal residualPrincipal) {
+        this.residualPrincipal = residualPrincipal;
+    }
+    /**
+     * 获取创建时间 createDate
+     */
+    public Date getCreateDate() {
+        return createDate;
+    }
+    /**
+     * 设置创建时间 createDate
+     */
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+    /**
+     * 获取修改时间 updateDate
+     */
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+    /**
+     * 设置修改时间 updateDate
+     */
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+    /**
+     * 获取修改人 updateUser
+     */
+    public String getUpdateUser() {
+        return updateUser;
+    }
+    /**
+     * 设置修改人 updateUser
+     */
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser;
+    }
+    /**
+     * 获取类型 type
+     */
+    public String getType() {
+        return type;
+    }
+    /**
+     * 设置类型 type
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+    /**
+     * 获取状态 state
+     */
+    public String getState() {
+        return state;
+    }
+    /**
+     * 设置状态 state
+     */
+    public void setState(String state) {
+        this.state = state;
+    }
+    /**
+     * 获取逻辑删除标识 isDel
+     */
+    public String getIsDel() {
+        return isDel;
+    }
+    /**
+     * 设置逻辑删除标识 isDel
+     */
+    public void setIsDel(String isDel) {
+        this.isDel = isDel;
+    }
+    /**
+     * 获取账单月份 statementMonth
+     */
+    public String getStatementMonth() {
+        return statementMonth;
+    }
+    /**
+     * 设置账单月份 statementMonth
+     */
+    public void setStatementMonth(String statementMonth) {
+        this.statementMonth = statementMonth;
+    }
+    
+}

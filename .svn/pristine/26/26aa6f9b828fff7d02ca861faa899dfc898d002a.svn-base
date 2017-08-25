@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhl.card.dao.ICardBlueBillDao">
+
+	<resultMap id="cardBlueBillMap" type="com.zhl.card.pojo.CardBlueBill" >
+		<id column="ID" property="id" jdbcType="VARCHAR"/>
+	    <result column="CARD_NO" property="cardNo" jdbcType="VARCHAR"/>
+	    <result column="CURRENCY" property="currency" jdbcType="VARCHAR"/>
+	    <result column="STATEMENT_START_DATE" property="statementStartDate" jdbcType="VARCHAR"/>
+	    <result column="STATEMENT_END_DATE" property="statementEndDate" jdbcType="VARCHAR"/>
+	    <result column="PAYMENT_DUE_DATE" property="paymentDueDate" jdbcType="VARCHAR"/>
+	    <result column="CUR_PAYMENT_MONEY" property="curPaymentMoney" jdbcType="DECIMAL"/>
+	    <result column="STATEMENT_MONTH" property="statementMonth" jdbcType="DECIMAL"/>
+	    <result column="MINI_PAYMENT_MONEY" property="miniPaymentMoney" jdbcType="DECIMAL"/>
+	    <result column="CREDIT_LIMIT" property="creditLimit" jdbcType="DECIMAL"/>
+	    <result column="WITHDRAWAL_LIMIT" property="withdrawalLimit" jdbcType="DECIMAL" />
+	    <result column="CUR_STATEMENT_MONEY" property="curStatementMoney" jdbcType="DECIMAL" />
+	    <result column="CUR_DEBITS_MONEY" property="curDebitsMoney" jdbcType="DECIMAL" />
+	    <result column="PRE_POAYMENT_MONEY" property="prePoaymentMoney" jdbcType="DECIMAL" />
+	    <result column="CUR_ADJUSTMENT_MONEY" property="curAdjustmentMoney" jdbcType="DECIMAL" />
+	    <result column="CYCLE_INTEREST" property="cycleInterest" jdbcType="DECIMAL" />
+	    <result column="PRE_STATEMENT_MONEY" property="preStatementMoney" jdbcType="DECIMAL" />
+	    <result column="ABLE_POINTS" property="ablePoints" jdbcType="VARCHAR" />
+	    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
+	    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP"/>
+	    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR"/>
+	    <result column="TYPE" property="type" jdbcType="VARCHAR"/>
+	    <result column="STATE" property="state" jdbcType="VARCHAR"/>
+	    <result column="ISDEL" property="isDel" jdbcType="VARCHAR"/>
+	</resultMap>
+	<sql id="Base_Column_List" >
+	    ID, CARD_NO, CURRENCY, STATEMENT_START_DATE, STATEMENT_END_DATE, PAYMENT_DUE_DATE, CUR_PAYMENT_MONEY, STATEMENT_MONTH, 
+	    MINI_PAYMENT_MONEY, CREDIT_LIMIT, WITHDRAWAL_LIMIT, CUR_STATEMENT_MONEY, CUR_DEBITS_MONEY, 
+	    PRE_POAYMENT_MONEY, CUR_ADJUSTMENT_MONEY, CYCLE_INTEREST, PRE_STATEMENT_MONEY, ABLE_POINTS,
+	    CREATE_DATE, UPDATE_DATE, UPDATE_USER, TYPE, STATE, ISDEL
+	</sql>
+	<select id="queryCardBlueBillCondition2List" parameterType="map"  resultMap="cardBlueBillMap">
+	   select 
+	   <include refid="Base_Column_List" />	   from CARD_BLUE_BILL 	   <where>
+	       <if test="id != null and id != ''"> and ID = #{id} </if>
+           <if test="cardNo != null and cardNo != ''"> and CARD_NO = #{cardNo} </if>
+           <if test="currency != null and currency != ''"> and CURRENCY = #{currency} </if>
+           <if test="statementStartDate != null and statementStartDate != ''"> and STATEMENT_START_DATE = #{statementStartDate} </if>
+           <if test="statementEndDate != null and statementEndDate != ''"> and STATEMENT_END_DATE = #{statementEndDate} </if>
+           <if test="paymentDueDate != null and paymentDueDate != ''"> and PAYMENT_DUE_DATE = #{paymentDueDate} </if>
+           <if test="curPaymentMoney != null and curPaymentMoney != ''"> and CUR_PAYMENT_MONEY = #{curPaymentMoney} </if>
+           <if test="statementMonth != null and statementMonth != ''"> and STATEMENT_MONTH = #{statementMonth} </if>
+           <if test="miniPaymentMoney != null and miniPaymentMoney != ''"> and MINI_PAYMENT_MONEY = #{miniPaymentMoney} </if>
+           <if test="creditLimit != null and creditLimit != ''"> and CREDIT_LIMIT = #{creditLimit} </if>
+           <if test="withdrawalLimit != null and withdrawalLimit != ''"> and WITHDRAWAL_LIMIT = #{withdrawalLimit} </if>
+           <if test="curStatementMoney != null and curStatementMoney != ''"> and CUR_STATEMENT_MONEY = #{curStatementMoney} </if>
+           <if test="curDebitsMoney != null and curDebitsMoney != ''"> and CUR_DEBITS_MONEY = #{curDebitsMoney} </if>
+           <if test="prePoaymentMoney != null and prePoaymentMoney != ''"> and PRE_POAYMENT_MONEY = #{prePoaymentMoney} </if>
+           <if test="curAdjustmentMoney != null and curAdjustmentMoney != ''"> and CUR_ADJUSTMENT_MONEY = #{curAdjustmentMoney} </if>
+           <if test="cycleInterest != null and cycleInterest != ''"> and CYCLE_INTEREST = #{cycleInterest} </if>
+           <if test="preStatementMoney != null and preStatementMoney != ''"> and PRE_STATEMENT_MONEY = #{preStatementMoney} </if>
+           <if test="ablePoints != null and ablePoints != ''"> and ABLE_POINTS = #{ablePoints} </if>
+           <if test="createDate != null and createDate != ''"> and CREATE_DATE = #{createDate} </if>
+           <if test="updateDate != null and updateDate != ''"> and UPDATE_DATE = #{updateDate} </if>
+           <if test="updateUser != null and updateUser != ''"> and UPDATE_USER = #{updateUser} </if>
+           <if test="type != null and type != ''"> and TYPE = #{type} </if>
+           <if test="state != null and state != ''"> and STATE = #{state} </if>
+           <if test="isDel != null and isDel != ''"> and ISDEL = #{isDel} </if>
+	   </where>
+	</select>
+	
+  	<update id="updateCardBlueBill" parameterType="map">
+  	     update BILL_INSTALLMENTS
+        <set>
+          <if test="currency != null" >
+            CURRENCY = #{currency},
+          </if>
+          <if test="statementStartDate != null" >
+            STATEMENT_START_DATE = #{statementStartDate},
+          </if>
+          <if test="statementEndDate != null" >
+            STATEMENT_END_DATE = #{statementEndDate},
+          </if>
+          <if test="paymentDueDate != null" >
+            PAYMENT_DUE_DATE = #{paymentDueDate},
+          </if>
+          <if test="curPaymentMoney != null" >
+            CUR_PAYMENT_MONEY = #{curPaymentMoney},
+          </if>
+          <if test="statementMonth != null" >
+            STATEMENT_MONTH = #{statementMonth},
+          </if>
+          <if test="miniPaymentMoney != null" >
+            MINI_PAYMENT_MONEY = #{miniPaymentMoney},
+          </if>
+            <if test="creditLimit != null" >
+            CREDIT_LIMIT = #{creditLimit},
+          </if>
+          <if test="withdrawalLimit != null" >
+            WITHDRAWAL_LIMIT = #{withdrawalLimit},
+          </if>
+          <if test="curStatementMoney != null" >
+            CUR_STATEMENT_MONEY = #{curStatementMoney}
+          </if>
+          <if test="curDebitsMoney != null" >
+            CUR_DEBITS_MONEY = #{curDebitsMoney}
+          </if>
+          <if test="prePoaymentMoney != null" >
+            PRE_POAYMENT_MONEY = #{prePoaymentMoney}
+          </if>
+          <if test="curAdjustmentMoney != null" >
+            CUR_ADJUSTMENT_MONEY = #{curAdjustmentMoney}
+          </if>
+          <if test="cycleInterest != null" >
+            CYCLE_INTEREST = #{cycleInterest}
+          </if>
+          <if test="preStatementMoney != null" >
+            PRE_STATEMENT_MONEY = #{preStatementMoney}
+          </if>
+          <if test="ablePoints != null" >
+            ABLE_POINTS = #{ablePoints}
+          </if>
+          <if test="createDate != null" >
+            CREATE_DATE = #{createDate}
+          </if>
+          <if test="updateDate != null" >
+            UPDATE_DATE = #{updateDate}
+          </if>
+          <if test="updateUser != null" >
+            UPDATE_USER = #{updateUser}
+          </if>
+          <if test="type != null" >
+            TYPE = #{type}
+          </if>
+          <if test="state != null" >
+            STATE = #{state}
+          </if>
+          <if test="isDel != null" >
+            ISDEL = #{isDel}
+          </if>
+        </set>
+        where ID = #{id}
+    </update>
+  	
+  	<insert id="insertCardBlueBill" parameterType="com.zhl.card.pojo.BillInstallments" useGeneratedKeys="true" keyProperty="id">
+  	     insert into BILL_INSTALLMENTS
+        (
+            <include refid="Base_Column_List" />
+        ) 
+        values 
+        ( 
+            #{id}, #{cardNo}, #{currency}, #{statementStartDate}, #{statementEndDate}, 
+            #{paymentDueDate}, #{curPaymentMoney}, #{statementMonth}, #{miniPaymentMoney}, 
+            #{creditLimit}, #{withdrawalLimit}, #{curStatementMoney}, #{curDebitsMoney},
+            #{prePoaymentMoney}, #{curAdjustmentMoney}, #{cycleInterest}, #{preStatementMoney}, 
+            #{ablePoints}, #{createDate}, #{updateDate}, #{updateUser}, #{type}, #{state}, #{isDel}
+        )
+  	</insert>
+</mapper>

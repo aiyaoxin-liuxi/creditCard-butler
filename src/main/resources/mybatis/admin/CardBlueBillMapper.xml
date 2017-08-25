@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhl.card.dao.ICardBlueBillDao">
+
+	<resultMap id="cardBlueBillMap" type="com.zhl.card.pojo.CardBlueBill" >
+		<id column="ID" property="id" jdbcType="VARCHAR"/>
+	    <result column="LOG_ID" property="logId" jdbcType="VARCHAR"/>
+	    <result column="USER_ID" property="userId" jdbcType="VARCHAR"/>
+	    <result column="CARD_ID" property="cardId" jdbcType="VARCHAR"/>
+	    <result column="CARD_NO" property="cardNo" jdbcType="VARCHAR"/>
+	    <result column="CURRENCY" property="currency" jdbcType="VARCHAR"/>
+	    <result column="STATEMENT_START_DATE" property="statementStartDate" jdbcType="VARCHAR"/>
+	    <result column="STATEMENT_END_DATE" property="statementEndDate" jdbcType="VARCHAR"/>
+	    <result column="PAYMENT_DUE_DATE" property="paymentDueDate" jdbcType="VARCHAR"/>
+	    <result column="CUR_PAYMENT_MONEY" property="curPaymentMoney" jdbcType="DECIMAL"/>
+	    <result column="STATEMENT_MONTH" property="statementMonth" jdbcType="VARCHAR"/>
+	    <result column="MINI_PAYMENT_MONEY" property="miniPaymentMoney" jdbcType="DECIMAL"/>
+	    <result column="CREDIT_LIMIT" property="creditLimit" jdbcType="DECIMAL"/>
+	    <result column="WITHDRAWAL_LIMIT" property="withdrawalLimit" jdbcType="DECIMAL" />
+	    <result column="ABLE_POINTS" property="ablePoints" jdbcType="VARCHAR" />
+	    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
+	    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP"/>
+	    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR"/>
+	    <result column="TYPE" property="type" jdbcType="VARCHAR"/>
+	    <result column="STATE" property="state" jdbcType="VARCHAR"/>
+	    <result column="ISDEL" property="isDel" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="Base_Column_List" >
+	    ID, LOG_ID, USER_ID, CARD_ID, CARD_NO, CURRENCY, STATEMENT_START_DATE, STATEMENT_END_DATE, 
+	    PAYMENT_DUE_DATE, CUR_PAYMENT_MONEY, STATEMENT_MONTH, 
+	    MINI_PAYMENT_MONEY, CREDIT_LIMIT, WITHDRAWAL_LIMIT, 
+	    ABLE_POINTS, CREATE_DATE, UPDATE_DATE, UPDATE_USER, TYPE, STATE, ISDEL
+	</sql>
+	<select id="queryCardBlueBillCondition2List" parameterType="map"  resultMap="cardBlueBillMap">
+	   select 
+	   <include refid="Base_Column_List" />	   
+	   from CARD_BLUE_BILL 	   
+	   <where>
+	       <if test="id != null and id != ''"> and ID = #{id} </if>
+           <if test="logId != null and logId != ''"> and LOG_ID = #{logId} </if>
+           <if test="userId != null and userId != ''"> and USER_ID = #{userId} </if>
+           <if test="cardId != null and cardId != ''"> and CARD_ID = #{cardId} </if>
+           <if test="cardNo != null and cardNo != ''"> and CARD_NO = #{cardNo} </if>
+           <if test="currency != null and currency != ''"> and CURRENCY = #{currency} </if>
+           <if test="statementStartDate != null and statementStartDate != ''"> and STATEMENT_START_DATE = #{statementStartDate} </if>
+           <if test="statementEndDate != null and statementEndDate != ''"> and STATEMENT_END_DATE = #{statementEndDate} </if>
+           <if test="paymentDueDate != null and paymentDueDate != ''"> and PAYMENT_DUE_DATE = #{paymentDueDate} </if>
+           <if test="curPaymentMoney != null and curPaymentMoney != ''"> and CUR_PAYMENT_MONEY = #{curPaymentMoney} </if>
+           <if test="statementMonth != null and statementMonth != ''"> and STATEMENT_MONTH = #{statementMonth} </if>
+           <if test="miniPaymentMoney != null and miniPaymentMoney != ''"> and MINI_PAYMENT_MONEY = #{miniPaymentMoney} </if>
+           <if test="creditLimit != null and creditLimit != ''"> and CREDIT_LIMIT = #{creditLimit} </if>
+           <if test="withdrawalLimit != null and withdrawalLimit != ''"> and WITHDRAWAL_LIMIT = #{withdrawalLimit} </if>
+           <if test="ablePoints != null and ablePoints != ''"> and ABLE_POINTS = #{ablePoints} </if>
+           <if test="createDate != null and createDate != ''"> and CREATE_DATE = #{createDate} </if>
+           <if test="updateDate != null and updateDate != ''"> and UPDATE_DATE = #{updateDate} </if>
+           <if test="updateUser != null and updateUser != ''"> and UPDATE_USER = #{updateUser} </if>
+           <if test="type != null and type != ''"> and TYPE = #{type} </if>
+           <if test="state != null and state != ''"> and STATE = #{state} </if>
+           <if test="isDel != null and isDel != ''"> and ISDEL = #{isDel} </if>
+	   </where>
+	        ORDER BY STATEMENT_MONTH DESC
+	</select>
+	
+  	<update id="updateCardBlueBill" parameterType="map">
+  	     update CARD_BLUE_BILL
+        <set>
+          <if test="currency != null" >
+            CURRENCY = #{currency},
+          </if>
+          <if test="statementStartDate != null" >
+            STATEMENT_START_DATE = #{statementStartDate},
+          </if>
+          <if test="statementEndDate != null" >
+            STATEMENT_END_DATE = #{statementEndDate},
+          </if>
+          <if test="paymentDueDate != null" >
+            PAYMENT_DUE_DATE = #{paymentDueDate},
+          </if>
+          <if test="curPaymentMoney != null" >
+            CUR_PAYMENT_MONEY = #{curPaymentMoney},
+          </if>
+          <if test="statementMonth != null" >
+            STATEMENT_MONTH = #{statementMonth},
+          </if>
+          <if test="miniPaymentMoney != null" >
+            MINI_PAYMENT_MONEY = #{miniPaymentMoney},
+          </if>
+            <if test="creditLimit != null" >
+            CREDIT_LIMIT = #{creditLimit},
+          </if>
+          <if test="withdrawalLimit != null" >
+            WITHDRAWAL_LIMIT = #{withdrawalLimit},
+          </if>
+          <if test="ablePoints != null" >
+            ABLE_POINTS = #{ablePoints}
+          </if>
+          <if test="createDate != null" >
+            CREATE_DATE = #{createDate}
+          </if>
+          <if test="updateDate != null" >
+            UPDATE_DATE = #{updateDate}
+          </if>
+          <if test="updateUser != null" >
+            UPDATE_USER = #{updateUser}
+          </if>
+          <if test="type != null" >
+            TYPE = #{type}
+          </if>
+          <if test="state != null" >
+            STATE = #{state}
+          </if>
+          <if test="isDel != null" >
+            ISDEL = #{isDel}
+          </if>
+        </set>
+        where ID = #{id}
+    </update>
+  	
+  	<insert id="insertCardBlueBill" parameterType="com.zhl.card.pojo.CardBlueBill" useGeneratedKeys="true" keyProperty="id">
+  	     insert into CARD_BLUE_BILL
+        (
+            <include refid="Base_Column_List" />
+        ) 
+        values 
+        ( 
+            #{id}, #{logId}, #{userId}, #{cardId}, #{cardNo}, #{currency}, #{statementStartDate}, #{statementEndDate}, 
+            #{paymentDueDate}, #{curPaymentMoney}, #{statementMonth}, #{miniPaymentMoney}, 
+            #{creditLimit}, #{withdrawalLimit}, #{ablePoints}, #{createDate}, #{updateDate}, #{updateUser}, #{type}, #{state}, #{isDel}
+        )
+  	</insert>
+  	
+  	
+  	<resultMap type="com.zhl.card.pojo.CardBlueBill" id="cardBlueBillAll" extends="cardBlueBillMap">
+       <collection property="accountChangeInfoList" javaType="list"  ofType="com.zhl.card.pojo.AccountChangeInfo">
+            <id column="AC_ID" property="id" jdbcType="VARCHAR"/>
+            <result column="CUR_STATEMENT_MONEY" property="curStatementMoney" jdbcType="DECIMAL" />
+            <result column="CUR_DEBITS_MONEY" property="curDebitsMoney" jdbcType="DECIMAL" />
+            <result column="PRE_POAYMENT_MONEY" property="prePoaymentMoney" jdbcType="DECIMAL" />
+            <result column="CUR_ADJUSTMENT_MONEY" property="curAdjustmentMoney" jdbcType="DECIMAL" />
+            <result column="CYCLE_INTEREST" property="cycleInterest" jdbcType="DECIMAL" />
+            <result column="PRE_STATEMENT_MONEY" property="preStatementMoney" jdbcType="DECIMAL" />
+        </collection>
+        <collection property="cardBlueBillDetailList" javaType="list"  ofType="com.zhl.card.pojo.CardBlueBillDetail">
+            <id column="CBBD_ID" property="id" jdbcType="VARCHAR"/>
+	        <result column="TRD_DATE" property="trdDate" jdbcType="VARCHAR"/>
+	        <result column="ACC_DATE" property="accDate" jdbcType="VARCHAR"/>
+	        <result column="PAY_MONEY" property="payMoney" jdbcType="DECIMAL"/>
+	        <result column="CBBD_CURRENCY" property="currency" jdbcType="VARCHAR"/>
+	        <result column="ACC_MONEY" property="accMoney" jdbcType="DECIMAL"/>
+	        <result column="SUMMARY" property="summary" jdbcType="VARCHAR"/>
+	        <result column="BILL_ADDR" property="billAddr" jdbcType="VARCHAR"/>
+	        <result column="BILL_NAME" property="billName" jdbcType="VARCHAR" />
+	        <result column="OTHER_ACCOUNT_NAME" property="otherAccountName" jdbcType="VARCHAR" />
+	        <result column="OTHER_ACCOUNT_NO" property="otherAccountNo" jdbcType="VARCHAR" />
+	        <result column="OTHER_OPENING_BANEK" property="otherOpeningBanek" jdbcType="VARCHAR" />
+        </collection>
+        <collection property="billInstallmentsList" javaType="list"  ofType="com.zhl.card.pojo.BillInstallments">
+            <id column="BI_ID" property="id" jdbcType="VARCHAR"/>
+	        <result column="INSTALMENT_TYPE" property="instalmentType" jdbcType="VARCHAR"/>
+	        <result column="INSTALMENT_DATE" property="instalmentDate" jdbcType="VARCHAR"/>
+	        <result column="INSTALMENT_MONEY" property="instalmentMoney" jdbcType="DECIMAL"/>
+	        <result column="INSTALMENT_COUNT" property="instalmentCount" jdbcType="DECIMAL"/>
+	        <result column="RESIDUA_INSTALMENT_COUNT" property="residuaInstalmentCount" jdbcType="DECIMAL"/>
+	        <result column="CRL_INSTALMENT_MONEY" property="crlInstalmentMoney" jdbcType="DECIMAL"/>
+	        <result column="CRL_INSTALMENT_FEE_MONEY" property="crlInstalmentFeeMoney" jdbcType="DECIMAL" />
+	        <result column="CRL_REPAYMENT_MONEY" property="crlRepaymentMoney" jdbcType="DECIMAL" />
+	        <result column="RESIDUAL_PRINCIPAL" property="residualPrincipal" jdbcType="DECIMAL" />
+        </collection>
+    </resultMap>
+    
+    <sql id="Base_Column_List_All" >
+        cbb.ID, cbb.LOG_ID, cbb.USER_ID, cbb.CARD_ID, cbb.CARD_NO, cbb.CURRENCY, cbb.STATEMENT_START_DATE, cbb.STATEMENT_END_DATE, 
+        cbb.PAYMENT_DUE_DATE, cbb.CUR_PAYMENT_MONEY, cbb.STATEMENT_MONTH, 
+        cbb.MINI_PAYMENT_MONEY, cbb.CREDIT_LIMIT, cbb.WITHDRAWAL_LIMIT, 
+        cbb.ABLE_POINTS, cbb.CREATE_DATE, cbb.UPDATE_DATE, cbb.UPDATE_USER, cbb.TYPE, cbb.STATE, cbb.ISDEL, 
+        
+        ac.ID as AC_ID, ac.CUR_STATEMENT_MONEY, ac.CUR_DEBITS_MONEY, 
+        ac.PRE_POAYMENT_MONEY, ac.CUR_ADJUSTMENT_MONEY, ac.CYCLE_INTEREST, ac.PRE_STATEMENT_MONEY, 
+        
+        cbbd.ID as CBBD_ID, cbbd.TRD_DATE, cbbd.ACC_DATE, cbbd.PAY_MONEY,
+        cbbd.CURRENCY as CBBD_CURRENCY, cbbd.ACC_MONEY, cbbd.SUMMARY, cbbd.BILL_ADDR, cbbd.BILL_NAME,
+        cbbd.OTHER_ACCOUNT_NAME, cbbd.OTHER_ACCOUNT_NO, cbbd.OTHER_OPENING_BANEK,
+        
+        bi.ID as BI_ID, bi.INSTALMENT_TYPE, bi.INSTALMENT_DATE, bi.INSTALMENT_MONEY,
+        bi.INSTALMENT_COUNT, bi.RESIDUA_INSTALMENT_COUNT, bi.CRL_INSTALMENT_MONEY, bi.CRL_INSTALMENT_FEE_MONEY, 
+        bi.CRL_REPAYMENT_MONEY, bi.RESIDUAL_PRINCIPAL
+    </sql>
+    
+    <select id="queryBillAllById" parameterType="map" resultMap="cardBlueBillAll">
+        select 
+        <include refid="Base_Column_List_All" /> 
+        from 
+        CARD_BLUE_BILL cbb 
+        LEFT JOIN ACCOUNT_CHANGE_INFO ac ON cbb.ID = ac.CARD_BLUE_BILL_ID 
+        LEFT JOIN CARD_BLUE_BILL_DETAIL cbbd ON cbb.ID = cbbd.CARD_BLUE_BILL_ID
+        LEFT JOIN BILL_INSTALLMENTS bi ON cbb.ID = bi.CARD_BLUE_BILL_ID
+        <where>
+            <if test="id != null and id != ''"> and cbb.ID = #{id} </if>
+            <if test="logId != null and logId != ''"> and cbb.LOG_ID = #{logId} </if>
+            <if test="userId != null and userId != ''"> and cbb.USER_ID = #{userId} </if>
+            <if test="cardId != null and cardId != ''"> and cbb.CARD_ID = #{cardId} </if>
+            <if test="cardNo != null and cardNo != ''"> and cbb.CARD_NO = #{cardNo} </if>
+        </where>
+        order by cbb.STATEMENT_MONTH desc
+    </select>
+    
+</mapper>

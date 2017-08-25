@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhl.card.dao.IAccountChangeInfoDao">
+
+	<resultMap id="accountChangeInfoMap" type="com.zhl.card.pojo.AccountChangeInfo" >
+		<id column="ID" property="id" jdbcType="VARCHAR"/>
+		<result column="CARD_BLUE_BILL_ID" property="cardBlueBillId" jdbcType="VARCHAR"/>
+	    <result column="CARD_NO" property="cardNo" jdbcType="VARCHAR"/>
+	    <result column="STATEMENT_MONTH" property="statementMonth" jdbcType="VARCHAR"/>
+	    <result column="CUR_STATEMENT_MONEY" property="curStatementMoney" jdbcType="DECIMAL" />
+	    <result column="CUR_DEBITS_MONEY" property="curDebitsMoney" jdbcType="DECIMAL" />
+	    <result column="PRE_POAYMENT_MONEY" property="prePoaymentMoney" jdbcType="DECIMAL" />
+	    <result column="CUR_ADJUSTMENT_MONEY" property="curAdjustmentMoney" jdbcType="DECIMAL" />
+	    <result column="CYCLE_INTEREST" property="cycleInterest" jdbcType="DECIMAL" />
+	    <result column="PRE_STATEMENT_MONEY" property="preStatementMoney" jdbcType="DECIMAL" />
+	    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
+	    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP"/>
+	    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR"/>
+	    <result column="TYPE" property="type" jdbcType="VARCHAR"/>
+	    <result column="STATE" property="state" jdbcType="VARCHAR"/>
+	    <result column="ISDEL" property="isDel" jdbcType="VARCHAR"/>
+	</resultMap>
+	<sql id="Base_Column_List" >
+	    ID, CARD_BLUE_BILL_ID, CARD_NO, STATEMENT_MONTH, 
+	    CUR_STATEMENT_MONEY, CUR_DEBITS_MONEY, 
+	    PRE_POAYMENT_MONEY, CUR_ADJUSTMENT_MONEY, 
+	    CYCLE_INTEREST, PRE_STATEMENT_MONEY, 
+	    CREATE_DATE, UPDATE_DATE, UPDATE_USER, TYPE, STATE, ISDEL
+	</sql>
+	<select id="queryAccountChangeInfoCondition2List" parameterType="map"  resultMap="accountChangeInfoMap">
+	   select 
+	   <include refid="Base_Column_List" />	   
+	   from ACCOUNT_CHANGE_INFO 	   
+	   <where>
+	       <if test="id != null and id != ''"> and ID = #{id} </if>
+           <if test="cardBlueBillId != null and cardBlueBillId != ''"> and CARD_BLUE_BILL_ID = #{cardBlueBillId} </if>
+           <if test="cardNo != null and cardNo != ''"> and CARD_NO = #{cardNo} </if>
+           <if test="statementMonth != null and statementMonth != ''"> and STATEMENT_MONTH = #{statementMonth} </if>
+           <if test="curStatementMoney != null and curStatementMoney != ''"> and CUR_STATEMENT_MONEY = #{curStatementMoney} </if>
+           <if test="curDebitsMoney != null and curDebitsMoney != ''"> and CUR_DEBITS_MONEY = #{curDebitsMoney} </if>
+           <if test="prePoaymentMoney != null and prePoaymentMoney != ''"> and PRE_POAYMENT_MONEY = #{prePoaymentMoney} </if>
+           <if test="curAdjustmentMoney != null and curAdjustmentMoney != ''"> and CUR_ADJUSTMENT_MONEY = #{curAdjustmentMoney} </if>
+           <if test="cycleInterest != null and cycleInterest != ''"> and CYCLE_INTEREST = #{cycleInterest} </if>
+           <if test="preStatementMoney != null and preStatementMoney != ''"> and PRE_STATEMENT_MONEY = #{preStatementMoney} </if>
+           <if test="createDate != null and createDate != ''"> and CREATE_DATE = #{createDate} </if>
+           <if test="updateDate != null and updateDate != ''"> and UPDATE_DATE = #{updateDate} </if>
+           <if test="updateUser != null and updateUser != ''"> and UPDATE_USER = #{updateUser} </if>
+           <if test="type != null and type != ''"> and TYPE = #{type} </if>
+           <if test="state != null and state != ''"> and STATE = #{state} </if>
+           <if test="isDel != null and isDel != ''"> and ISDEL = #{isDel} </if>
+	   </where>
+	</select>
+	
+  	<update id="updateAccountChangeInfo" parameterType="map">
+  	     update ACCOUNT_CHANGE_INFO
+        <set>
+          <if test="curStatementMoney != null" >
+            CUR_STATEMENT_MONEY = #{curStatementMoney}
+          </if>
+          <if test="curDebitsMoney != null" >
+            CUR_DEBITS_MONEY = #{curDebitsMoney}
+          </if>
+          <if test="prePoaymentMoney != null" >
+            PRE_POAYMENT_MONEY = #{prePoaymentMoney}
+          </if>
+          <if test="curAdjustmentMoney != null" >
+            CUR_ADJUSTMENT_MONEY = #{curAdjustmentMoney}
+          </if>
+          <if test="cycleInterest != null" >
+            CYCLE_INTEREST = #{cycleInterest}
+          </if>
+          <if test="preStatementMoney != null" >
+            PRE_STATEMENT_MONEY = #{preStatementMoney}
+          </if>
+          <if test="createDate != null" >
+            CREATE_DATE = #{createDate}
+          </if>
+          <if test="updateDate != null" >
+            UPDATE_DATE = #{updateDate}
+          </if>
+          <if test="updateUser != null" >
+            UPDATE_USER = #{updateUser}
+          </if>
+          <if test="type != null" >
+            TYPE = #{type}
+          </if>
+          <if test="state != null" >
+            STATE = #{state}
+          </if>
+          <if test="isDel != null" >
+            ISDEL = #{isDel}
+          </if>
+        </set>
+        where ID = #{id}
+    </update>
+  	
+  	<insert id="insertAccountChangeInfo" parameterType="com.zhl.card.pojo.AccountChangeInfo" useGeneratedKeys="true" keyProperty="id">
+  	     insert into ACCOUNT_CHANGE_INFO
+        (
+            <include refid="Base_Column_List" />
+        ) 
+        values 
+        ( 
+            #{id}, #{cardBlueBillId}, #{cardNo}, #{statementMonth}, 
+            #{curStatementMoney}, #{curDebitsMoney}, #{prePoaymentMoney}, 
+            #{curAdjustmentMoney}, #{cycleInterest}, #{preStatementMoney}, 
+            #{createDate}, #{updateDate}, #{updateUser}, #{type}, #{state}, #{isDel}
+        )
+  	</insert>
+  	
+  	<insert id="insertAccountChangeInfoList" parameterType="java.util.List" useGeneratedKeys="false">
+        insert into ACCOUNT_CHANGE_INFO (
+        <include refid="Base_Column_List"/>
+        )
+        <foreach collection="list" item="item" index="index" separator="union all">
+            (select 
+            #{item.id}, #{item.cardBlueBillId}, #{item.cardNo}, #{item.statementMonth}, 
+            #{item.curStatementMoney}, #{item.curDebitsMoney}, #{item.prePoaymentMoney}, 
+            #{item.curAdjustmentMoney}, #{item.cycleInterest}, #{item.preStatementMoney}, 
+            #{item.createDate}, #{item.updateDate}, #{item.updateUser}, #{item.type}, #{item.state}, #{item.isDel}
+            from dual)
+        </foreach>
+    </insert>
+</mapper>

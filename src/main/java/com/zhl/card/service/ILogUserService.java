@@ -1,0 +1,53 @@
+package com.zhl.card.service;
+
+import java.util.List;
+import java.util.Map;
+
+import com.github.pagehelper.PageInfo;
+import com.zhl.card.pojo.LogUser;
+
+
+public interface ILogUserService {
+    
+    /**
+     * 注册
+     * @param logUser
+     * @return
+     */
+    int setRegister(String logUserId, String userId, LogUser logUser);
+    
+    /**
+     * 根据手机号查询是否存在
+     * @return
+     */
+    List<LogUser> queryLogUserByCondition(String logMobile);
+    
+    /**
+     * 用户登录
+     * @param logMobile
+     * @param logPassword
+     * @return
+     */
+    Map<String, Object> login(String keySn, String logMobile, String logPassword);
+    
+    /**
+     * 修改登录密码
+     * @param keySn
+     * @param id
+     * @param logPassword
+     * @param newLogPassword
+     * @return
+     */
+    String updatePassword(String keySn, String id, String logPassword, String newLogPassword);
+    
+    /**
+     * 忘记密码————修改原密码
+     * @param keySn
+     * @param id
+     * @param logPassword
+     * @param newLogPassword
+     * @return
+     */
+    int forgotPassword(String keySn, String id, String newLogPassword);
+    
+}

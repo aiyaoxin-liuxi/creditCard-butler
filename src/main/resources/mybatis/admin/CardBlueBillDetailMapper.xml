@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhl.card.dao.ICardBlueBillDetailDao">
+
+	<resultMap id="cardBlueBillDetailMap" type="com.zhl.card.pojo.CardBlueBillDetail" >
+		<id column="ID" property="id" jdbcType="VARCHAR"/>
+	    <result column="CARD_BLUE_BILL_ID" property="cardBlueBillId" jdbcType="VARCHAR"/>
+	    <result column="CARD_NO" property="cardNo" jdbcType="VARCHAR"/>
+	    <result column="STATEMENT_MONTH" property="statementMonth" jdbcType="VARCHAR"/>
+	    <result column="TRD_DATE" property="trdDate" jdbcType="VARCHAR"/>
+	    <result column="ACC_DATE" property="accDate" jdbcType="VARCHAR"/>
+	    <result column="CARD_4NO" property="card4No" jdbcType="VARCHAR"/>
+	    <result column="PAY_MONEY" property="payMoney" jdbcType="DECIMAL"/>
+	    <result column="CURRENCY" property="currency" jdbcType="VARCHAR"/>
+	    <result column="ACC_MONEY" property="accMoney" jdbcType="DECIMAL"/>
+	    <result column="SUMMARY" property="summary" jdbcType="VARCHAR"/>
+	    <result column="BILL_ADDR" property="billAddr" jdbcType="VARCHAR"/>
+	    <result column="BILL_NAME" property="billName" jdbcType="VARCHAR" />
+	    <result column="OTHER_ACCOUNT_NAME" property="otherAccountName" jdbcType="VARCHAR" />
+	    <result column="OTHER_ACCOUNT_NO" property="otherAccountNo" jdbcType="VARCHAR" />
+	    <result column="OTHER_OPENING_BANEK" property="otherOpeningBanek" jdbcType="VARCHAR" />
+	    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
+	    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP"/>
+	    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR"/>
+	    <result column="TYPE" property="type" jdbcType="VARCHAR"/>
+	    <result column="STATE" property="state" jdbcType="VARCHAR"/>
+	    <result column="ISDEL" property="isDel" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="Base_Column_List" >
+	    ID, CARD_BLUE_BILL_ID, CARD_NO, STATEMENT_MONTH, TRD_DATE, ACC_DATE, CARD_4NO, PAY_MONEY, CURRENCY, 
+	    ACC_MONEY, SUMMARY, BILL_ADDR, BILL_NAME, OTHER_ACCOUNT_NAME, OTHER_ACCOUNT_NO, OTHER_OPENING_BANEK, 
+	    CREATE_DATE, UPDATE_DATE, UPDATE_USER, TYPE, STATE, ISDEL
+	</sql>
+	
+	<select id="queryCardBlueBillDetailCondition2List" parameterType="map"  resultMap="cardBlueBillDetailMap">
+	   select 
+	   <include refid="Base_Column_List" />
+	   from CARD_BLUE_BILL_DETAIL 
+	   <where>
+	       <if test="id != null and id != ''"> and ID = #{id} </if>
+           <if test="cardBlueBillId != null and cardBlueBillId != ''"> and CARD_BLUE_BILL_ID = #{cardBlueBillId} </if>
+           <if test="cardNo != null and cardNo != ''"> and CARD_NO = #{cardNo} </if>
+           <if test="statementMonth != null and statementMonth != ''"> and STATEMENT_MONTH = #{statementMonth} </if>
+           <if test="trdDate != null and trdDate != ''"> and TRD_DATE = #{trdDate} </if>
+           <if test="accDate != null and accDate != ''"> and ACC_DATE = #{accDate} </if>
+           <if test="card4No != null and card4No != ''"> and CARD_4NO = #{card4No} </if>
+           <if test="payMoney != null and payMoney != ''"> and PAY_MONEY = #{payMoney} </if>
+           <if test="currency != null and currency != ''"> and CURRENCY = #{currency} </if>
+           <if test="accMoney != null and accMoney != ''"> and ACC_MONEY = #{accMoney} </if>
+           <if test="summary != null and summary != ''"> and SUMMARY = #{summary} </if>
+           <if test="billAddr != null and billAddr != ''"> and BILL_ADDR = #{billAddr} </if>
+           <if test="billName != null and billName != ''"> and BILL_NAME = #{billName} </if>
+           <if test="otherAccountName != null and otherAccountName != ''"> and OTHER_ACCOUNT_NAME = #{otherAccountName} </if>
+           <if test="otherAccountNo != null and otherAccountNo != ''"> and OTHER_ACCOUNT_NO = #{otherAccountNo} </if>
+           <if test="otherOpeningBanek != null and otherOpeningBanek != ''"> and OTHER_OPENING_BANEK = #{otherOpeningBanek} </if>
+           <if test="createDate != null and createDate != ''"> and CREATE_DATE = #{createDate} </if>
+           <if test="updateDate != null and updateDate != ''"> and UPDATE_DATE = #{updateDate} </if>
+           <if test="updateUser != null and updateUser != ''"> and UPDATE_USER = #{updateUser} </if>
+           <if test="type != null and type != ''"> and TYPE = #{type} </if>
+           <if test="state != null and state != ''"> and STATE = #{state} </if>
+           <if test="isDel != null and isDel != ''"> and ISDEL = #{isDel} </if>
+	   </where>
+	</select>
+	
+  	<update id="updateCardBlueBillDetail" parameterType="map">
+  	     update CARD_BLUE_BILL_DETAIL
+        <set>
+          <if test="trdDate != null" >
+            TRD_DATE = #{trdDate},
+          </if>
+          <if test="accDate != null" >
+            ACC_DATE = #{accDate},
+          </if>
+          <if test="payMoney != null" >
+            PAY_MONEY = #{payMoney},
+          </if>
+          <if test="currency != null" >
+            CURRENCY = #{currency},
+          </if>
+          <if test="accMoney != null" >
+            ACC_MONEY = #{accMoney},
+          </if>
+          <if test="summary != null" >
+            SUMMARY = #{summary},
+          </if>
+          <if test="billAddr != null" >
+            BILL_ADDR = #{billAddr},
+          </if>
+          <if test="billName != null" >
+            BILL_NAME = #{billName},
+          </if>
+          <if test="otherAccountName != null" >
+            OTHER_ACCOUNT_NAME = #{otherAccountName},
+          </if>
+          <if test="otherAccountNo != null" >
+            OTHER_ACCOUNT_NO = #{otherAccountNo}
+          </if>
+          <if test="otherOpeningBanek != null" >
+            OTHER_OPENING_BANEK = #{otherOpeningBanek}
+          </if>
+          <if test="updateDate != null" >
+            UPDATE_DATE = #{updateDate}
+          </if>
+          <if test="updateUser != null" >
+            UPDATE_USER = #{updateUser}
+          </if>
+          <if test="type != null" >
+            TYPE = #{type}
+          </if>
+          <if test="state != null" >
+            STATE = #{state}
+          </if>
+          <if test="isDel != null" >
+            ISDEL = #{isDel}
+          </if>
+        </set>
+        where ID = #{id}
+    </update>
+  	
+  	<insert id="insertCardBlueBillDetail" parameterType="com.zhl.card.pojo.CardBlueBillDetail" useGeneratedKeys="true" keyProperty="id">
+  	     insert into CARD_BLUE_BILL_DETAIL
+        (
+            <include refid="Base_Column_List" />
+        ) 
+        values 
+        ( 
+            #{id}, #{cardBlueBillId}, #{cardNo}, #{statementMonth}, #{trdDate}, #{accDate}, 
+            #{card4No},#{payMoney}, #{currency}, #{accMoney}, #{summary}, 
+            #{billAddr}, #{billName}, #{otherAccountName}, #{otherAccountNo}, 
+            #{otherOpeningBanek}, #{createDate}, #{updateDate}, #{updateUser}, 
+            #{type}, #{state}, #{isDel}
+        )
+  	</insert>
+  	
+  	<!-- 批量写入 -->
+    <insert id="insertCardBlueBillDetailList" parameterType="java.util.List" useGeneratedKeys="false">
+        insert into CARD_BLUE_BILL_DETAIL (
+        <include refid="Base_Column_List"/>
+        )
+        <foreach collection="list" item="item" index="index" separator="union all">
+            (select 
+            #{item.id}, #{item.cardBlueBillId}, #{item.cardNo},  #{item.statementMonth}, #{item.trdDate}, #{item.accDate}, 
+            #{item.card4No},#{item.payMoney}, #{item.currency}, #{item.accMoney}, #{item.summary}, 
+            #{item.billAddr}, #{item.billName}, #{item.otherAccountName}, #{item.otherAccountNo}, 
+            #{item.otherOpeningBanek}, #{item.createDate}, #{item.updateDate}, #{item.updateUser}, 
+            #{item.type}, #{item.state}, #{item.isDel}
+            from dual)
+        </foreach>
+    </insert>
+</mapper>

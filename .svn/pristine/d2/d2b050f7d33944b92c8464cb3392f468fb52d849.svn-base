@@ -1,0 +1,12 @@
+#\u4e0a\u4f20\u56fe\u7247\u5730\u5740
+#image_server_url=http\://218.240.148.254/statics/
+image_server_url=http\://192.168.20.62\:8002/statics/
+#\u8bfb\u53d6\u56fe\u7247\u5730\u5740
+image_server_url_load=http\://218.240.148.254/statics/
+memcache_head=test
+memcache_server=192.168.20.63\:11211
+hc.bill.apikey=568453403212
+hc.bill.apiSecret=R0wnI5eoA69kzSMwq4mLmxotlWjSr6xp 
+hc.bill.url=http://www.tobecook.cn/sde/api/geteway
+hc.bill.charset=UTF-8
+hc.bill.callBackUrl=http://ystest.zhonghulian.cn:8070/creditCard-butler

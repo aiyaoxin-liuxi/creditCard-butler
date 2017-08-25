@@ -1,0 +1,190 @@
+package com.zhl.card.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.lang.StringUtils;
+import org.pub.util.uuid.KeySn;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.zhl.card.controller.common.BaseController;
+import com.zhl.card.pojo.EmailInfo;
+import com.zhl.card.pojo.UserInfo;
+import com.zhl.card.pojo.common.ResponseEntity;
+import com.zhl.card.pojo.enums.common.IsDel;
+import com.zhl.card.pojo.enums.common.ReturnCode;
+import com.zhl.card.service.IEmailInfoService;
+import com.zhl.card.service.IUserInfoService;
+
+@Controller
+@RequestMapping(value = "/emailInfo")
+public class EmailInfoController extends BaseController {
+
+    private Logger logs = LoggerFactory.getLogger(EmailInfoController.class);
+
+    @Resource
+    private IEmailInfoService emailInfoService;
+    @Resource
+    private IUserInfoService userInfoService;
+
+    /**
+     * 增加邮箱,并直接获取邮箱账单
+     * @param cardInfo
+     * @return
+     */
+    @RequestMapping(value = "/addAndQueryEmailInfo")
+    @ResponseBody
+    public Object addAndQueryEmailInfo(EmailInfo emailInfo) {
+
+        ResponseEntity resEntity = new ResponseEntity();
+        String keySn = KeySn.getKey();
+        logs.info("添加邮箱...开始--->keySn = " + keySn + ",logId = " + emailInfo.getLogId() + 
+                ",userId = " + emailInfo.getUserId() + ",email = " + emailInfo.getEmail() + 
+                ",emailPassWord = " + emailInfo.getEmailPassword());
+        
+        // 必填项检查，姓名、身份证信息、卡号、手机号、银行号
+        String check = checkAddAndQueryEmailInfo(emailInfo);
+        if(null != check){
+            resEntity.setResponseEntity(keySn, ReturnCode.DATA_VALID_FAIL_200000.getName(), ReturnCode.DATA_VALID_FAIL_200000.getName() + check);
+            logs.info("添加邮箱...结束--->resEntity = " + resEntity);
+            return resEntity;
+        }
+        List<UserInfo> list = userInfoService.queryEmailByLogIdAndUserId(emailInfo.getLogId(), emailInfo.getUserId());
+        if(null == list && list.size() == 0){
+            resEntity.setResponseEntity(keySn, ReturnCode.OBJECT_NOT_FIND_111111.getCode(), ReturnCode.OBJECT_NOT_FIND_111111.getName());
+            logs.info("添加邮箱...结束--->resEntity = " + resEntity);
+            return resEntity;
+        }
+        logs.info("添加邮箱...准备组装数据入库--->keySn = " + keySn + ",emailInfo = " + emailInfo);
+        // email信息入库
+        Map<String, Object> map = emailInfoService.addEmailInfo(keySn, emailInfo);
+        if(map.isEmpty()){
+            resEntity.setResponseEntity(keySn, ReturnCode.INSERT_FAIL_200007.getCode(), ReturnCode.INSERT_FAIL_200007.getName());
+            logs.info("添加邮箱...结束--->resEntity = " + resEntity);
+            return resEntity;
+        }
+        if(!ReturnCode.SUCCESS_000000.getCode().equals(map.get("returnCode"))){
+            resEntity.setResponseEntity(keySn, (String)map.get("returnCode"), (String)map.get("reason"));
+            logs.info("添加邮箱...结束--->resEntity = " + resEntity);
+            return resEntity;
+        }
+        
+        // 直接调用获取邮箱账单
+        logs.info("调用邮箱账单获取接口...准备--->keySn = " + keySn);
+        
+        logs.info("调用邮箱账单获取接口...完成--->keySn = " + keySn);
+        
+        // token和ybid入库
+        String id = (String) map.get("data");
+        String token = "";
+        String ybId = "";
+        
+        int reInt = emailInfoService.updateEmailInfoTokenAndybIdByid(token, ybId, id);
+        if(reInt == 1){
+            resEntity.setResponseEntity(keySn, ReturnCode.SUCCESS_000000.getCode(), ReturnCode.SUCCESS_000000.getName());
+        } else {
+            resEntity.setResponseEntity(keySn, ReturnCode.UPDATE_FAIL_200008.getCode(), ReturnCode.UPDATE_FAIL_200008.getName());
+        }
+        logs.debug("添加邮箱...结束--->resEntity = " + resEntity);
+        
+        return resEntity;
+    }
+    
+    /**
+     * 获取邮箱账单（根据id）
+     * @param cardInfo
+     * @return
+     */
+    @RequestMapping(value = "/queryEmailInfo")
+    @ResponseBody
+    public Object queryEmailInfo(EmailInfo emailInfo) {
+
+        ResponseEntity resEntity = new ResponseEntity();
+        String keySn = KeySn.getKey();
+        logs.debug("获取邮箱信息...开始--->keySn = " + keySn + ",id = " + emailInfo.getId());
+         
+        String check = checkQueryEmailInfo(emailInfo);
+        if(null != check){
+            resEntity.setResponseEntity(keySn, ReturnCode.DATA_VALID_FAIL_200000.getName(), ReturnCode.DATA_VALID_FAIL_200000.getName() + check);
+            logs.debug("获取邮箱信息...结束--->resEntity = " + resEntity);
+            return resEntity;
+        }
+        // 根据ID获取邮箱信息
+        EmailInfo eInfo = emailInfoService.queryEmailInfoById(emailInfo.getId());
+        if(null == eInfo){
+            resEntity.setResponseEntity(keySn, ReturnCode.EMAIL_NOT_FIND_111114.getName(), ReturnCode.EMAIL_NOT_FIND_111114.getName());
+            logs.debug("获取邮箱信息...结束--->resEntity = " + resEntity);
+            return resEntity;
+        }
+        
+        // 直接调用获取邮箱账单
+        logs.info("调用邮箱账单获取接口...准备--->keySn = " + keySn);
+        
+        logs.info("调用邮箱账单获取接口...完成--->keySn = " + keySn);
+        
+        // token和ybid入库
+        String id = eInfo.getId();
+        String token = "";
+        String ybId = "";
+        
+        int reInt = emailInfoService.updateEmailInfoTokenAndybIdByid(token, ybId, id);
+        if(reInt == 1){
+            resEntity.setResponseEntity(keySn, ReturnCode.SUCCESS_000000.getCode(), ReturnCode.SUCCESS_000000.getName());
+        } else {
+            resEntity.setResponseEntity(keySn, ReturnCode.UPDATE_FAIL_200008.getCode(), ReturnCode.UPDATE_FAIL_200008.getName());
+        }
+        logs.debug("添加邮箱...结束--->resEntity = " + resEntity);
+        
+        return resEntity;
+    }
+    
+    
+    
+    // =========================check==================
+
+    /**
+     * 
+     * 
+     * @param cardNo
+     * @return
+     */
+    private String checkAddAndQueryEmailInfo(EmailInfo emailInfo) {
+        
+        if(null == emailInfo){
+            return "参数不能为空";
+        }
+        if (StringUtils.isBlank(emailInfo.getLogId())) {
+            return "登录id不能为空";
+        }
+        if (StringUtils.isBlank(emailInfo.getUserId())) {
+            return "userId不能为空";
+        }
+        if (StringUtils.isBlank(emailInfo.getEmail())) {
+            return "邮箱不能为空";
+        }
+        if (StringUtils.isBlank(emailInfo.getEmailPassword())) {
+            return "邮箱密码不能为空";
+        }
+        return null;
+    }
+
+    private String checkQueryEmailInfo(EmailInfo emailInfo) {
+        
+        if(null == emailInfo){
+            return "参数不能为空";
+        }
+        if (StringUtils.isBlank(emailInfo.getId())) {
+            return "id不能为空";
+        }
+        return null;
+    }
+    
+
+}

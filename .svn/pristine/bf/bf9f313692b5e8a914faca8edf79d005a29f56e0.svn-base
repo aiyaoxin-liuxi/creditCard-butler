@@ -1,0 +1,88 @@
+package com.zhl.card.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.lang.StringUtils;
+import org.pub.util.memcached.MemcacheManager;
+import org.pub.util.uuid.KeySn;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.zhl.card.controller.common.BaseController;
+import com.zhl.card.pojo.CardBin;
+import com.zhl.card.pojo.common.ResponseEntity;
+import com.zhl.card.pojo.enums.common.ReturnCode;
+import com.zhl.card.service.ICardBinService;
+import com.zhl.card.util.Constant;
+import com.zhl.card.util.Stringer;
+
+@Controller
+@RequestMapping(value = "/cardBin")
+public class CardBinController extends BaseController{
+
+	private Logger logs = LoggerFactory.getLogger(CardBinController.class);
+	
+	@Resource
+	private ICardBinService cardBinService;
+	
+	@RequestMapping(value = "queryCardBin")
+	@ResponseBody
+	public Object queryCardBin(String cardNo){
+	    
+	    ResponseEntity resEntity = new ResponseEntity();
+	    String keySn = KeySn.getKey();
+	    logs.info("卡BIN信息查询.....开始，cardno=" + cardNo);
+	    
+	    String check = checkQueryCardBin(cardNo);
+	    if(null != check){
+	        resEntity.setResponseEntity(keySn, ReturnCode.DATA_VALID_FAIL_200000.getCode(), check);
+            logs.info("卡BIN信息查询.....返回参数：" + resEntity.toString());
+            return resEntity;
+	    }
+	    
+	    Object object = MemcacheManager.getInstance().get(Constant.CARD_BIN);
+        if(Stringer.isNullOrEmpty(object)){
+            cardBinService.cardBinInit();
+            object = MemcacheManager.getInstance().get(Constant.CARD_BIN);
+        }
+        if(Stringer.isNullOrEmpty(object)){
+            resEntity.setResponseEntity(keySn, ReturnCode.CACHE_FAIL_200003.getCode(), ReturnCode.CACHE_FAIL_200003.getName());
+        }
+        
+        CardBin cardBin = cardBinService.getBankInfo(cardNo , (Map<String, Object>) object);
+        
+        if(null != cardBin){
+            Map<String, Object> returnMap = new HashMap<String, Object>();
+            returnMap.put("cardBin", cardBin);
+            resEntity.setResponseEntity(keySn, ReturnCode.SUCCESS_000000.getCode(), ReturnCode.SUCCESS_000000.getName(), returnMap);
+        } else {
+            resEntity.setResponseEntity(keySn, ReturnCode.CARDBIN_NOT_FIND_111112.getCode(), ReturnCode.CARDBIN_NOT_FIND_111112.getName());
+        }
+        logs.info("卡BIN信息查询.....结束" + resEntity.toString());
+	    return resEntity;
+	}
+	
+	
+	// =========================check==================
+	
+	/**
+	 * 检查获取银行名称参数
+	 * @param cardNo
+	 * @return
+	 */
+	private String checkQueryCardBin(String cardNo){
+	    
+	    if(StringUtils.isBlank(cardNo)){
+	        return "卡号不能为空";
+	    }
+	    return null;
+	}
+	
+	
+}

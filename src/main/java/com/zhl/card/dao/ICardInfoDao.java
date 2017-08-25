@@ -1,0 +1,39 @@
+package com.zhl.card.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import com.zhl.card.pojo.CardInfo;
+
+public interface ICardInfoDao {
+    
+    /**
+     * 写入
+     * @param bankInfo
+     * @return
+     */
+    int insertCardInfo(CardInfo cardInfo);
+    
+    /**
+     * 修改
+     * @param map
+     * @return
+     */
+    int updateCardInfo(Map<String, Object> map);
+    
+    /**
+     * 模糊查询卡号后4位
+     * @param map
+     * @return
+     */
+    CardInfo queryCardInfoByLikeCardNo(Map<String, Object> map);
+    
+	/**
+	 * 按条件查询银行卡信息
+	 * @return
+	 */
+	List<CardInfo> queryCardInfoCondition2List(Map<String, Object> map);
+	
+	
+
+}
